@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Piece : MonoBehaviour
 {
+    SpawnBox spawner;
     float gravityScaleBase;
     float lastPositionY;
     bool grounded;
 
+
     private void Start()
     {
         this.gravityScaleBase = this.GetComponent<Rigidbody2D>().gravityScale;
+        spawner = GameObject.FindGameObjectWithTag("Spawn Box").GetComponent<SpawnBox>();
     }
-    private void FixedUpdate()
+    private void Update()
     {
         if (!grounded)
         {
@@ -26,25 +29,33 @@ public class Piece : MonoBehaviour
                 this.GetComponent<Rigidbody2D>().gravityScale = gravityScaleBase;
             }
 
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                transform.position = new Vector3(transform.position.x + .1f, transform.position.y, transform.position.z);
+                transform.position = new Vector3(transform.position.x + .5f, transform.position.y, transform.position.z);
             }
 
-            if (Input.GetKey(KeyCode.LeftArrow))
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                transform.position = new Vector3(transform.position.x - .1f, transform.position.y, transform.position.z);
+                transform.position = new Vector3(transform.position.x - .5f, transform.position.y, transform.position.z);
             }
 
+            lastPositionY = (this.transform.position.y);
+        }
 
-            if ((this.GetComponent<Transform>().position.y) < -50)
+        if ((this.transform.position.y - GameObject.FindGameObjectWithTag("Ground").transform.position.y) < 0)
+        {
+            // Remove bloc
+            // Retire one life
+            // 
+
+            Destroy(this.gameObject);
+            ground();
+
+            if(spawner.getLastPiece() == this.gameObject)
             {
-                // Remove bloc
-                // Retire one life
-                // 
+                spawnNewPiece();
             }
 
-            lastPositionY = (this.GetComponent<Transform>().position.y);
         }
     }
 
@@ -52,9 +63,25 @@ public class Piece : MonoBehaviour
     {
         if (!grounded && (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Piece"))
         {
-            grounded = true;
-            GameObject.FindGameObjectWithTag("Spawn Box").GetComponent<SpawnBox>().SpawnNewBox();
+            ground();
+            spawnNewPiece();
         }
+    }
+
+    private void ground()
+    {
+        this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 2;
+        grounded = true;
+    }
+
+    private void spawnNewPiece()
+    {
+        spawner.SpawnNewBox();
+    }
+
+    public bool isGrounded()
+    {
+        return grounded;
     }
 
 }

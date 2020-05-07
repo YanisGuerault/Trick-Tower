@@ -8,6 +8,8 @@ public class SpawnBox : MonoBehaviour
 
     public GameObject[] boxList;
 
+    private GameObject lastPiece;
+
     void Start()
     {
         SpawnNewBox();
@@ -16,6 +18,11 @@ public class SpawnBox : MonoBehaviour
     public void SpawnNewBox()
     {
         int i = Random.Range(0, boxList.Length);
-        Instantiate(boxList[i], transform.position, Quaternion.identity);
+        lastPiece = Instantiate(boxList[i], transform.position, Quaternion.identity);
+    }
+
+    public GameObject getLastPiece()
+    {
+        return lastPiece;
     }
 }
