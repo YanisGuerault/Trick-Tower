@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3525456496751270485}
   - component: {fileID: 3525456496751270484}
   - component: {fileID: 3525456496751270483}
-  - component: {fileID: 3525456496751270568}
+  - component: {fileID: 4626561931114357365}
   m_Layer: 0
   m_Name: Spawn (1)
   m_TagString: Piece
@@ -129,7 +129,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &3525456496751270568
+--- !u!114 &4626561931114357365
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
