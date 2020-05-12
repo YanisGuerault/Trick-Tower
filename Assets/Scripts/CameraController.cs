@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Transform mainCamera;
     public Transform spawner;
+    public Transform ground;
     public SpawnBox spawn;
     private float delta;
     private Vector3 velocity = Vector3.zero;
+    private Vector3 firstPosition;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        firstPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -23,26 +24,26 @@ public class CameraController : MonoBehaviour
         {
             float high = findHighestObject("Piece").transform.position.y;
 
-            Debug.Log("High : " + high + " | Camera : " + mainCamera.position.y);
+            Debug.Log("High : " + high + " | Camera : " + transform.position.y);
 
-            if (high > mainCamera.position.y)
+            if (high > transform.position.y)
             {
-                delta = high+1 - mainCamera.position.y;
-                mainCamera.transform.position = Vector3.SmoothDamp(mainCamera.transform.position, new Vector3(mainCamera.position.x, high + 1, mainCamera.position.z), ref velocity, 0.4F);
-                //mainCamera.transform.position = new Vector3(mainCamera.position, new Vector3(mainCamera.position.x, high+1, mainCamera.position.z);
+                delta = high+1 - transform.position.y;
+                transform.transform.position = Vector3.SmoothDamp(transform.transform.position, new Vector3(transform.position.x, high + 1, transform.position.z), ref velocity, 0.4F);
+                //>.transform.position = new Vector3(>.position, new Vector3(>.position.x, high+1, >.position.z);
                 spawner.transform.position = Vector3.SmoothDamp(spawner.transform.position, new Vector3(spawner.position.x, spawner.position.y + delta, spawner.position.z), ref velocity, 0.4F);
                 //spawner.transform.position = new Vector3(spawner.position.x, spawner.position.y + delta, spawner.position.z);
             }
 
-            if (high < mainCamera.position.y)
+            if (high < transform.position.y)
             {
-                delta = mainCamera.position.y - high;
+                delta = transform.position.y - high;
                 Transform spawnPosition = spawn.getLastPiece().transform;
                 spawnPosition.position = Vector3.SmoothDamp(spawnPosition.position, new Vector3(spawnPosition.position.x, spawnPosition.position.y - delta, spawnPosition.position.z), ref velocity, 0.4F);
-                mainCamera.transform.position = Vector3.SmoothDamp(mainCamera.position, new Vector3(mainCamera.position.x, high, mainCamera.position.z), ref velocity, 0.4F);
+                transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, high, transform.position.z), ref velocity, 0.4F);
                 spawner.transform.position = Vector3.SmoothDamp(spawner.position, new Vector3(spawner.position.x, spawner.position.y - delta, spawner.position.z), ref velocity, 0.4F);
                 /*spawnPosition.position = new Vector3(spawnPosition.position.x, spawnPosition.position.y - delta, spawnPosition.position.z);
-                mainCamera.transform.position = new Vector3(mainCamera.position.x, high, mainCamera.position.z);
+                >.transform.position = new Vector3(>.position.x, high, >.position.z);
                 spawner.transform.position = new Vector3(spawner.position.x, spawner.position.y - delta, spawner.position.z);*/
             }
         }
