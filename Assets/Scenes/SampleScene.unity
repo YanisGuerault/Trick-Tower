@@ -343,7 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   boxList:
-  - {fileID: 3525456496751270482, guid: aa3a2f31db373e14b84cdb607bf8c0c9, type: 3}
+  - {fileID: 4553554911646515620, guid: 2c6916480c49cd344ace4a3fe0d4a616, type: 3}
 --- !u!65 &403591540
 BoxCollider:
   m_ObjectHideFlags: 0
