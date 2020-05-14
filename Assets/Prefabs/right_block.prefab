@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1523118824903658258}
   - component: {fileID: 245855012947044431}
   - component: {fileID: 1260420566045501422}
+  - component: {fileID: 375896439350870467}
   m_Layer: 0
   m_Name: right_block
   m_TagString: Untagged
@@ -147,6 +148,14 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!33 &375896439350870467
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4553554911646515620}
+  m_Mesh: {fileID: 0}
 --- !u!1 &8015616509857883193
 GameObject:
   m_ObjectHideFlags: 0
