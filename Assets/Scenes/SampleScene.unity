@@ -343,7 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 403591544}
   boxList:
-  - {fileID: 3525456496751270482, guid: aa3a2f31db373e14b84cdb607bf8c0c9, type: 3}
+  - {fileID: 4553554911646515620, guid: 2c6916480c49cd344ace4a3fe0d4a616, type: 3}
 --- !u!65 &403591540
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca8b25515b8568a49aba65ca583c4dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground: {fileID: 141729047}
+  ground: {fileID: 0}
   spawn: {fileID: 403591539}
 --- !u!20 &519420031
 Camera:

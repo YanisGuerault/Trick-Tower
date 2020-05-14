@@ -44,6 +44,7 @@ public class Piece : MonoBehaviour
 
     private void keyControl()
     {
+        Debug.Log(player);
         switch (player.controls)
         {
             case Player.Controls.Arrow:
@@ -122,7 +123,7 @@ public class Piece : MonoBehaviour
 
     private void rotation()
     {
-        Quaternion rotationAmount = Quaternion.Euler(90, 0, 0);
+        Quaternion rotationAmount = Quaternion.Euler(0, 0, 90);
         transform.rotation *= rotationAmount;
     }
 
