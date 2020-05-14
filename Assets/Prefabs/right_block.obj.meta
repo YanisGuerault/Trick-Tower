@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 47415380f6b4a5b4c95559db7d6ec60d
+guid: 13abd92daf8bf824cbb9ac2d393de8ee
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
@@ -7,12 +7,7 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Red
-    second: {fileID: 2100000, guid: 0c2036227e1191e42bc2affcf3e60542, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Rock
+      name: defaultMat
     second: {fileID: 2100000, guid: 5cb3d1e10c0f3a242a0b42a65514d423, type: 2}
   materials:
     materialImportMode: 1
