@@ -44,7 +44,6 @@ public class Piece : MonoBehaviour
 
     private void keyControl()
     {
-        Debug.Log(player);
         switch (player.controls)
         {
             case Player.Controls.Arrow:
@@ -70,6 +69,15 @@ public class Piece : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
                     transform.position = new Vector3(transform.position.x - .5f, transform.position.y, transform.position.z);
+                }
+                if(Input.GetKeyDown(KeyCode.P))
+                {
+                    Debug.Log(player.getBonusList());
+                    //TODO Activate the good bonus
+                    foreach(Bonus b in player.getBonusList())
+                    {
+                        b.Activate();
+                    }
                 }
                 break;
             default:

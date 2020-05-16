@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public int nbLivesStart;
     public Controls controls;
     bool invicibility;
+    List<Bonus> bonus = new List<Bonus>();
 
     private int nbLives;
     // Start is called before the first frame update
@@ -15,12 +16,13 @@ public class Player : MonoBehaviour
     {
         nbLives = nbLivesStart;
         invicibility = false;
+        bonus.Add(new Grossisement());
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Player "+ controls +" life :" + nbLives);
+        //Debug.Log("Player "+ controls +" life :" + nbLives);
     }
 
     public void removeLife()
@@ -42,6 +44,11 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         invicibility = false;
+    }
+
+    public List<Bonus> getBonusList()
+    {
+        return bonus;
     }
 
 }
