@@ -6,7 +6,6 @@ public class CameraController : MonoBehaviour
 {
     Transform[] spawner;
     public Transform ground;
-    public SpawnBox spawn;
     private float delta;
     private Vector3 velocity = Vector3.zero;
     private Vector3 firstPosition;
@@ -58,9 +57,9 @@ public class CameraController : MonoBehaviour
             if (objectToFollow < transform.position.y && transform.position.y > firstPosition.y)
             {
                 delta = transform.position.y - objectToFollow;
-                Transform spawnPosition = spawn.getLastPiece().transform;
+               /* Transform spawnPosition = spawn.getLastPiece().transform;
                 spawnPosition.position = Vector3.SmoothDamp(spawnPosition.position, new Vector3(spawnPosition.position.x, spawnPosition.position.y - delta, spawnPosition.position.z), ref velocity, 0.4F);
-                transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, objectToFollow, transform.position.z), ref velocity, 0.4F);
+                transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, objectToFollow, transform.position.z), ref velocity, 0.4F);*/
                 foreach (Transform spawn in spawner)
                 {
                     spawn.position = Vector3.SmoothDamp(spawn.position, new Vector3(spawn.position.x, spawn.position.y - delta, spawn.position.z), ref velocity, 0.4F);

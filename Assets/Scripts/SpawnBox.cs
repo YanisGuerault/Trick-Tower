@@ -29,4 +29,9 @@ public class SpawnBox : MonoBehaviour
     {
         return lastPiece;
     }
+
+    public Piece getLastPieceComponent()
+    {
+        return lastPiece.GetComponent<Piece>();
+    }
 }

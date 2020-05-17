@@ -17,12 +17,8 @@ public class Grossisement : Bonus
         
     }
 
-    public override void Activate()
+    public override void Activate(GameObject piece)
     {
-        Debug.Log("It's work");
-        foreach(GameObject g in GameObject.FindGameObjectsWithTag("Piece"))
-        {
-            g.transform.localScale += new Vector3(scaleIncrease, scaleIncrease, scaleIncrease);
-        }
+         piece.transform.localScale += new Vector3(scaleIncrease, scaleIncrease, scaleIncrease);
     }
 }

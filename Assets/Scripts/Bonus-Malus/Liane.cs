@@ -27,7 +27,7 @@ public class Liane : Bonus
         }
     }
 
-    public override void Activate()
+    public override void Activate(GameObject piece)
     {
 
     }
