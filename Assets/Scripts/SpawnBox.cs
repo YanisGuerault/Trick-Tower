@@ -10,7 +10,7 @@ public class SpawnBox : MonoBehaviour
 
     public GameObject[] boxList;
 
-    private GameObject lastPiece;
+    private List<GameObject> pieces = new List<GameObject>();
 
     void Start()
     {
@@ -20,18 +20,18 @@ public class SpawnBox : MonoBehaviour
     public void SpawnNewBox()
     {
         int i = Random.Range(0, boxList.Length);
-        lastPiece = Instantiate(boxList[i], transform.position, Quaternion.identity);
-        lastPiece.GetComponent<Piece>().setPlayer(player);
-        lastPiece.GetComponent<Piece>().setSpawner(this);
+        pieces.Add(Instantiate(boxList[i], transform.position, Quaternion.identity));
+        getLastPiece().GetComponent<Piece>().setPlayer(player);
+        getLastPiece().GetComponent<Piece>().setSpawner(this);
     }
 
     public GameObject getLastPiece()
     {
-        return lastPiece;
+        return pieces[pieces.Count-1];
     }
 
     public Piece getLastPieceComponent()
     {
-        return lastPiece.GetComponent<Piece>();
+        return getLastPiece().GetComponent<Piece>();
     }
 }

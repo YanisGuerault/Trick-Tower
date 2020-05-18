@@ -8,7 +8,6 @@ public class Ice : Bonus
     // Start is called before the first frame update
     void Start()
     {
-        iceMaterial = Resources.Load<PhysicsMaterial2D>("Materials/icefloor");
     }
 
     // Update is called once per frame
@@ -19,7 +18,6 @@ public class Ice : Bonus
 
     public override void Activate(GameObject piece)
     {
-        Debug.Log(iceMaterial);
         piece.GetComponent<BoxCollider2D>().sharedMaterial = iceMaterial;
         piece.GetComponent<Rigidbody2D>().sharedMaterial = iceMaterial;
     }
