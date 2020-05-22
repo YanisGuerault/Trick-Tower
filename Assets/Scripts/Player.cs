@@ -9,7 +9,8 @@ public class Player : MonoBehaviour
     public Controls controls;
     public SpawnBox spawner;
     bool invicibility;
-    List<Bonus> bonus = new List<Bonus>();
+    Bonus bonus;
+    Malus malus;
 
 
     private int nbLives;
@@ -18,7 +19,8 @@ public class Player : MonoBehaviour
     {
         nbLives = nbLivesStart;
         invicibility = false;
-        bonus.Add(new Ice());
+        bonus = new Liane();
+        malus = new Grossisement();
     }
 
     // Update is called once per frame
@@ -79,11 +81,11 @@ public class Player : MonoBehaviour
                 }
                 if (Input.GetKeyDown(KeyCode.P))
                 {
-                    Debug.Log("Activate bonus");
-                    foreach (Bonus b in bonus)
-                    {
-                        b.Activate(spawner.getLastPiece());
-                    }
+                    ActivateBonus();
+                }
+                if(Input.GetKeyDown(KeyCode.M))
+                {
+                    ActivateMalus();
                 }
                 break;
             default:
@@ -115,14 +117,38 @@ public class Player : MonoBehaviour
 
     }
 
-    public List<Bonus> getBonusList()
+    public Bonus getBonus()
     {
         return bonus;
     }
 
     public void removeBonus()
     {
-        bonus = new List<Bonus>();
+        bonus = null;
+    }
+
+    public Malus getMalus()
+    {
+        return malus;
+    }
+
+    public void removeMalus()
+    {
+        malus = null;
+    }
+
+    public void ActivateBonus()
+    {
+        bonus.Activate(spawner.getLastPiece());
+        removeBonus();
+        removeMalus();
+    }
+
+    public void ActivateMalus()
+    {
+        malus.Activate(spawner.getLastPiece());
+        removeBonus();
+        removeMalus();
     }
 
 }

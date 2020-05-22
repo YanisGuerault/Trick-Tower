@@ -18,7 +18,6 @@ public class Liane : Bonus
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("COLLISSION");
         if ((collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Piece") && collision.rigidbody != null)
         {
             FixedJoint2D joint = gameObject.AddComponent<FixedJoint2D>();
@@ -29,6 +28,6 @@ public class Liane : Bonus
 
     public override void Activate(GameObject piece)
     {
-
+        piece.AddComponent<Liane>();
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ice : Bonus
+public class Ice : Malus
 {
     public PhysicsMaterial2D iceMaterial;
     // Start is called before the first frame update
@@ -16,7 +16,7 @@ public class Ice : Bonus
         
     }
 
-    public override void Activate(GameObject piece)
+    protected override void Activation(GameObject piece)
     {
         piece.GetComponent<BoxCollider2D>().sharedMaterial = iceMaterial;
         piece.GetComponent<Rigidbody2D>().sharedMaterial = iceMaterial;
