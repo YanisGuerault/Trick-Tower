@@ -4,25 +4,16 @@ using UnityEngine;
 
 public class Liane : Bonus
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    List<GameObject> objectWithJoin = new List<GameObject>();
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if ((collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Piece") && collision.rigidbody != null)
+        if ((collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Piece") && collision.rigidbody != null && !(objectWithJoin.Contains(collision.gameObject)))
         {
             FixedJoint2D joint = gameObject.AddComponent<FixedJoint2D>();
             joint.connectedBody = collision.rigidbody;
             joint.enableCollision = true;
+            objectWithJoin.Add(collision.gameObject);
         }
     }
 

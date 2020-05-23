@@ -8,9 +8,11 @@ public class Player : MonoBehaviour
     public int nbLivesStart;
     public Controls controls;
     public SpawnBox spawner;
+    public bool commandsEnable = true;
     bool invicibility;
     Bonus bonus;
     Malus malus;
+    GameManager gameManager;
 
 
     private int nbLives;
@@ -21,6 +23,7 @@ public class Player : MonoBehaviour
         invicibility = false;
         bonus = new Liane();
         malus = new Grossisement();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
@@ -28,6 +31,7 @@ public class Player : MonoBehaviour
     {
         //Debug.Log("Player "+ controls +" life :" + nbLives);
         keyControl();
+        spawner.changeSimulate(gameManager.getOnPause());
     }
 
     public void removeLife()
@@ -53,66 +57,74 @@ public class Player : MonoBehaviour
 
     private void keyControl()
     {
-        switch (controls)
+        if (commandsEnable)
         {
-            case Player.Controls.Arrow:
-                if (Input.GetKeyDown(KeyCode.UpArrow))
-                {
-                    spawner.getLastPieceComponent().rotation();
-                }
+            switch (controls)
+            {
+                case Player.Controls.Arrow:
+                    if (Input.GetKeyDown(KeyCode.UpArrow))
+                    {
+                        spawner.getLastPieceComponent().rotation();
+                    }
 
-                if (Input.GetKey(KeyCode.DownArrow))
-                {
-                    spawner.getLastPieceComponent().fastDrop();
-                }
-                else
-                {
-                    spawner.getLastPieceComponent().resetDrop();
-                }
+                    if (Input.GetKey(KeyCode.DownArrow))
+                    {
+                        spawner.getLastPieceComponent().fastDrop();
+                    }
+                    else
+                    {
+                        spawner.getLastPieceComponent().resetDrop();
+                    }
 
-                if (Input.GetKeyDown(KeyCode.RightArrow))
-                {
-                    spawner.getLastPieceComponent().movePiece(1);
-                }
+                    if (Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        spawner.getLastPieceComponent().movePiece(1);
+                    }
 
-                if (Input.GetKeyDown(KeyCode.LeftArrow))
-                {
-                    spawner.getLastPieceComponent().movePiece(-1);
-                }
-                if (Input.GetKeyDown(KeyCode.P))
-                {
-                    ActivateBonus();
-                }
-                if(Input.GetKeyDown(KeyCode.M))
-                {
-                    ActivateMalus();
-                }
-                break;
-            default:
-                if (Input.GetKeyDown(KeyCode.Z))
-                {
-                    spawner.getLastPieceComponent().rotation();
-                }
+                    if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        spawner.getLastPieceComponent().movePiece(-1);
+                    }
+                    if (Input.GetKeyDown(KeyCode.O))
+                    {
+                        ActivateBonus();
+                    }
+                    if (Input.GetKeyDown(KeyCode.L))
+                    {
+                        ActivateMalus();
+                    }
+                    break;
+                default:
+                    if (Input.GetKeyDown(KeyCode.Z))
+                    {
+                        spawner.getLastPieceComponent().rotation();
+                    }
 
-                if (Input.GetKey(KeyCode.S))
-                {
-                    spawner.getLastPieceComponent().fastDrop();
-                }
-                else
-                {
-                    spawner.getLastPieceComponent().resetDrop();
-                }
+                    if (Input.GetKey(KeyCode.S))
+                    {
+                        spawner.getLastPieceComponent().fastDrop();
+                    }
+                    else
+                    {
+                        spawner.getLastPieceComponent().resetDrop();
+                    }
 
-                if (Input.GetKeyDown(KeyCode.D))
-                {
-                    spawner.getLastPieceComponent().movePiece(1);
-                }
+                    if (Input.GetKeyDown(KeyCode.D))
+                    {
+                        spawner.getLastPieceComponent().movePiece(1);
+                    }
 
-                if (Input.GetKeyDown(KeyCode.Q))
-                {
-                    spawner.getLastPieceComponent().movePiece(-1);
-                }
-                break;
+                    if (Input.GetKeyDown(KeyCode.Q))
+                    {
+                        spawner.getLastPieceComponent().movePiece(-1);
+                    }
+                    break;
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            gameManager.changePauseState();
         }
 
     }
