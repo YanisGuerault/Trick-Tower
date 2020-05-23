@@ -58,7 +58,7 @@ public class CameraController : MonoBehaviour
 
             yc = y0 + zc * Mathf.Tan(Mathf.Deg2Rad * (thetax + fov / 2)) + 1;
 
-            yc = yc < firstPosition.y ? firstPosition.y : yc;
+            yc = yc < firstPosition.y ? firstPosition.y : yc+1;
 
 
             for (int i = 0; i < spawner.Length; i++)

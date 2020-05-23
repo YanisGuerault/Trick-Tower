@@ -34,4 +34,12 @@ public class SpawnBox : MonoBehaviour
     {
         return getLastPiece().GetComponent<Piece>();
     }
+
+    public void changeSimulate(bool onPause)
+    {
+        foreach(GameObject piece in pieces)
+        {
+            piece.GetComponent<Rigidbody2D>().simulated = !onPause;
+        }
+    }
 }
