@@ -5,8 +5,9 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     Transform[] spawner;
+    public List<Player> playerList;
     public Transform ground;
-    public SpawnBox spawn;
+    public float cameraSmooth = 1.0f;
     private float delta;
     private Vector3 velocity = Vector3.zero;
     private Vector3 firstPosition;
@@ -15,7 +16,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         firstPosition = transform.position;
-        spawner = new Transform[10];
+        spawner = new Transform[GameObject.FindGameObjectsWithTag("Spawn Box").Length];
         int i = 0;
         foreach(GameObject go in GameObject.FindGameObjectsWithTag("Spawn Box"))
         {
@@ -24,66 +25,126 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public Transform target;
+    float zc = 0;
+    float yc = 0;
+    float xc = 0;
+    float fov = 0;
+    float thetax;
+    float y0 = -4;
+    float y1;
+
+    private void Awake()
     {
-        if (findHighestObject("Piece") != null)
+        fov = Camera.main.orthographicSize;
+        thetax = transform.eulerAngles.x;
+    }
+
+    void FixedUpdate()
+    {
+        if (findHighestObject("Piece") != null && findLowestObject("Piece") != null)
         {
+            y0 = findLowestObject("Piece").transform.position.y - 2;
+            y1 = findHighestObject("Piece").transform.position.y + 2;
 
-            //Debug.Log("High : " + high + " | Camera : " + transform.position.y);
+            // Inconnus zc,yc (c = caméra) 
 
-            float objectToFollow = findHighestObject("Piece").transform.position.y;
+            zc = (y0 - y1) / (Mathf.Tan(Mathf.Deg2Rad * (thetax - fov / 2)) - Mathf.Tan(Mathf.Deg2Rad * (thetax + fov / 2)));
 
-            /*if(spawn.getLastPiece().transform.position.y < transform.position.y)
+            float z = Mathf.Round((y1 - y0) / 2) < 5 ? 5 : Mathf.Round((y1 - y0) / 2);
+
+            if (zc < 5)
+                zc = 5;
+
+            yc = y0 + zc * Mathf.Tan(Mathf.Deg2Rad * (thetax + fov / 2)) + 1;
+
+            yc = yc < firstPosition.y ? firstPosition.y : yc;
+
+
+            for (int i = 0; i < spawner.Length; i++)
             {
-                objectToFollow = spawn.getLastPiece().transform.position.y;
-            }
-            else
-            {
-                objectToFollow = findHighestObject("Piece").transform.position.y;
-            }*/
-
-            if (objectToFollow > transform.position.y)
-            {
-                delta = objectToFollow + 1 - transform.position.y;
-                transform.transform.position = Vector3.SmoothDamp(transform.transform.position, new Vector3(transform.position.x, objectToFollow + 1, transform.position.z), ref velocity, 0.4F);
-                //>.transform.position = new Vector3(>.position, new Vector3(>.position.x, high+1, >.position.z);
-                foreach (Transform spawn in spawner)
+                if (spawner[i] != null)
                 {
-                    spawn.position = Vector3.SmoothDamp(spawn.position, new Vector3(spawn.position.x, spawn.position.y + delta, spawn.position.z), ref velocity, 0.4F);
+                    spawner[i].position = new Vector3(spawner[i].position.x, transform.position.y + GetComponent<Camera>().orthographicSize + 3, spawner[i].position.z);
                 }
-                //spawner.transform.position = new Vector3(spawner.position.x, spawner.position.y + delta, spawner.position.z);
             }
+      
 
-            if (objectToFollow < transform.position.y && transform.position.y > firstPosition.y)
+            this.GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, z, Time.deltaTime * cameraSmooth);
+
+
+            // Smoothly move the camera towards that target position 
+            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, yc, transform.position.z), ref velocity, cameraSmooth);
+
+            foreach (Player p in playerList)
             {
-                delta = transform.position.y - objectToFollow;
-                Transform spawnPosition = spawn.getLastPiece().transform;
-                spawnPosition.position = Vector3.SmoothDamp(spawnPosition.position, new Vector3(spawnPosition.position.x, spawnPosition.position.y - delta, spawnPosition.position.z), ref velocity, 0.4F);
-                transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, objectToFollow, transform.position.z), ref velocity, 0.4F);
-                foreach (Transform spawn in spawner)
+                Vector3 lastPosition = p.spawner.getLastPiece().transform.position;
+                if (lastPosition.y > transform.position.y + GetComponent<Camera>().orthographicSize)
                 {
-                    spawn.position = Vector3.SmoothDamp(spawn.position, new Vector3(spawn.position.x, spawn.position.y - delta, spawn.position.z), ref velocity, 0.4F);
+                    p.spawner.getLastPiece().transform.position = new Vector3(lastPosition.x, transform.position.y + GetComponent<Camera>().orthographicSize, lastPosition.z);
                 }
-                /*spawnPosition.position = new Vector3(spawnPosition.position.x, spawnPosition.position.y - delta, spawnPosition.position.z);
-                >.transform.position = new Vector3(>.position.x, high, >.position.z);
-                spawner.transform.position = new Vector3(spawner.position.x, spawner.position.y - delta, spawner.position.z);*/
             }
         }
+
+
     }
 
     GameObject findHighestObject(string tag)
     {
+        GameObject max = null;
+        float maxPosition = -9999999f;
+
+        foreach (GameObject obj in findHighestObjectPerPlayer(tag))
+        {
+            if (obj == null) { break; }
+            if (maxPosition < obj.transform.position.y)
+            {
+                max = obj;
+                maxPosition = obj.transform.position.y;
+            }
+        }
+
+        return max;
+    }
+
+    GameObject findLowestObject(string tag)
+    {
+
+        GameObject min = null;
+        float minPosition = 9999999f;
+
+        foreach (GameObject obj in findHighestObjectPerPlayer(tag))
+        {
+            if(obj == null){break;}
+            if (minPosition > obj.transform.position.y)
+            {
+                min = obj;
+                minPosition = obj.transform.position.y;
+            }
+        }
+
+        return min;
+    }
+
+    GameObject[] findHighestObjectPerPlayer(string tag)
+    {
         GameObject[] pieceList = GameObject.FindGameObjectsWithTag(tag);
-        GameObject highestPiece = null;
-        float highestPiecePosition = -99999f; //start with a value that could never be higher than all your objects
+        GameObject[] highestPiece = new GameObject[playerList.Count];
+        float[] highestPiecePosition = new float[playerList.Count];
+
+        for(int i = 0; i < highestPiecePosition.Length;i++)
+        {
+            highestPiecePosition[i] = -999999999999f;
+        }
+
         for (int i = 0; i < pieceList.Length; i++)
         {
-            float y = pieceList[i].transform.position.y; //cache this, because calculating it twice is also slower than need be
-            if  (pieceList[i].GetComponent<Piece>().isGrounded() && y > highestPiecePosition)
+            float y = pieceList[i].transform.position.y;
+            int playerIdx = playerList.IndexOf(pieceList[i].GetComponent<Piece>().player);
+            if (pieceList[i].GetComponent<Piece>().isGrounded() && y > highestPiecePosition[playerIdx])
             {
-                highestPiecePosition = y;
-                highestPiece = pieceList[i];
+                highestPiecePosition[playerIdx] = y;
+                highestPiece[playerIdx] = pieceList[i];
             }
         }
 

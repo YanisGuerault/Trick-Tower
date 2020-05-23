@@ -20,7 +20,6 @@ public class Piece : MonoBehaviour
     {
         if (!grounded)
         {
-            keyControl();
             lastPositionY = (this.transform.position.y);
         }
 
@@ -40,65 +39,6 @@ public class Piece : MonoBehaviour
             }
 
         }
-    }
-
-    private void keyControl()
-    {
-        Debug.Log(player);
-        switch (player.controls)
-        {
-            case Player.Controls.Arrow:
-                if (Input.GetKeyDown(KeyCode.UpArrow))
-                {
-                    rotation();
-                }
-
-                if (Input.GetKey(KeyCode.DownArrow))
-                {
-                    this.GetComponent<Rigidbody2D>().gravityScale += .1f;
-                }
-                else
-                {
-                    this.GetComponent<Rigidbody2D>().gravityScale = gravityScaleBase;
-                }
-
-                if (Input.GetKeyDown(KeyCode.RightArrow))
-                {
-                    transform.position = new Vector3(transform.position.x + .5f, transform.position.y, transform.position.z);
-                }
-
-                if (Input.GetKeyDown(KeyCode.LeftArrow))
-                {
-                    transform.position = new Vector3(transform.position.x - .5f, transform.position.y, transform.position.z);
-                }
-                break;
-            default:
-                if (Input.GetKeyDown(KeyCode.Z))
-                {
-                    rotation();
-                }
-
-                if (Input.GetKey(KeyCode.S))
-                {
-                    this.GetComponent<Rigidbody2D>().gravityScale += .1f;
-                }
-                else
-                {
-                    this.GetComponent<Rigidbody2D>().gravityScale = gravityScaleBase;
-                }
-
-                if (Input.GetKeyDown(KeyCode.D))
-                {
-                    transform.position = new Vector3(transform.position.x + .5f, transform.position.y, transform.position.z);
-                }
-
-                if (Input.GetKeyDown(KeyCode.Q))
-                {
-                    transform.position = new Vector3(transform.position.x - .5f, transform.position.y, transform.position.z);
-                }
-                break;
-        }
-       
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -121,7 +61,7 @@ public class Piece : MonoBehaviour
         spawner.SpawnNewBox();
     }
 
-    private void rotation()
+    public void rotation()
     {
         Quaternion rotationAmount = Quaternion.Euler(0, 0, 90);
         transform.rotation *= rotationAmount;
@@ -140,6 +80,24 @@ public class Piece : MonoBehaviour
     public void setSpawner(SpawnBox spawner)
     {
         this.spawner = spawner;
+    }
+
+    public void movePiece(int direction)
+    {
+        if(direction > 0)
+            transform.position = new Vector3(transform.position.x + .5f, transform.position.y, transform.position.z);
+        else if(direction < 0)
+            transform.position = new Vector3(transform.position.x - .5f, transform.position.y, transform.position.z);
+    }
+
+    public void fastDrop()
+    {
+        this.GetComponent<Rigidbody2D>().gravityScale += .1f;
+    }
+
+    public void resetDrop()
+    {
+        this.GetComponent<Rigidbody2D>().gravityScale = gravityScaleBase;
     }
 
 
