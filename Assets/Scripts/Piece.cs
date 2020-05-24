@@ -29,7 +29,7 @@ public class Piece : MonoBehaviour
             // Retire one life
             // 
 
-            Destroy(this.gameObject);
+            spawner.removeAPiece(this.gameObject);
             ground();
             player.removeLife();
 
@@ -37,6 +37,8 @@ public class Piece : MonoBehaviour
             {
                 spawnNewPiece();
             }
+
+            Destroy(this.gameObject);
 
         }
     }

@@ -47,6 +47,8 @@ public class CameraController : MonoBehaviour
             y0 = findLowestObject("Piece").transform.position.y - 2;
             y1 = findHighestObject("Piece").transform.position.y + 2;
 
+            Debug.Log(findHighestObject("Piece").GetComponent<MeshRenderer>().bounds);
+
             // Inconnus zc,yc (c = caméra) 
 
             zc = (y0 - y1) / (Mathf.Tan(Mathf.Deg2Rad * (thetax - fov / 2)) - Mathf.Tan(Mathf.Deg2Rad * (thetax + fov / 2)));
@@ -58,7 +60,7 @@ public class CameraController : MonoBehaviour
 
             yc = y0 + zc * Mathf.Tan(Mathf.Deg2Rad * (thetax + fov / 2)) + 1;
 
-            yc = yc < firstPosition.y ? firstPosition.y : yc+1;
+            yc = yc < firstPosition.y-1 ? firstPosition.y : yc+2;
 
 
             for (int i = 0; i < spawner.Length; i++)

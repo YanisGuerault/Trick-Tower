@@ -35,6 +35,11 @@ public class SpawnBox : MonoBehaviour
         return getLastPiece().GetComponent<Piece>();
     }
 
+    public void removeAPiece(GameObject piece)
+    {
+        pieces.Remove(piece);
+    }
+
     public void changeSimulate(bool onPause)
     {
         foreach(GameObject piece in pieces)
