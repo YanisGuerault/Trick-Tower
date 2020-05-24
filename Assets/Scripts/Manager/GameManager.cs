@@ -39,6 +39,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void endGame()
+    {
+
+    }
+
     IEnumerator waitAfterPause()
     {
         yield return new WaitForSeconds(1f);

@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 380802068}
   - component: {fileID: 380802067}
   m_Layer: 0
-  m_Name: New Sprite
+  m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -379,7 +379,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d8991a37bdc92584e9b2861d83d99aa5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4cc2f38ff55672a408a207c85bded845, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -398,8 +398,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 380802066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.38, y: 10.5, z: 27.370325}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalPosition: {x: -1.15, y: 22.79, z: 27.370325}
+  m_LocalScale: {x: 6.5284476, y: 7.146432, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -448,6 +448,8 @@ MonoBehaviour:
   - {fileID: 3358704642747359199, guid: d516c61e05be53344a0d7d00f3784caa, type: 3}
   - {fileID: 3605708980596784241, guid: 07728ed310f03a04ea0637e0c776382d, type: 3}
   - {fileID: 941433564329274921, guid: 08a223230192e484a92f05dbd02d7727, type: 3}
+  linearDrag: 25
+  gravityScale: 1
 --- !u!23 &403591541
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -670,6 +672,8 @@ MonoBehaviour:
   - {fileID: 3358704642747359199, guid: d516c61e05be53344a0d7d00f3784caa, type: 3}
   - {fileID: 3605708980596784241, guid: 07728ed310f03a04ea0637e0c776382d, type: 3}
   - {fileID: 941433564329274921, guid: 08a223230192e484a92f05dbd02d7727, type: 3}
+  linearDrag: 25
+  gravityScale: 1
 --- !u!65 &531573420
 BoxCollider:
   m_ObjectHideFlags: 0

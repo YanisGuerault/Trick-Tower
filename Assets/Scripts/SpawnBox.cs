@@ -12,6 +12,9 @@ public class SpawnBox : MonoBehaviour
 
     private List<GameObject> pieces = new List<GameObject>();
 
+    public float linearDrag = 25;
+    public float gravityScale = 1;
+
     void Start()
     {
         SpawnNewBox();
@@ -23,6 +26,8 @@ public class SpawnBox : MonoBehaviour
         pieces.Add(Instantiate(boxList[i], transform.position, Quaternion.identity));
         getLastPiece().GetComponent<Piece>().setPlayer(player);
         getLastPiece().GetComponent<Piece>().setSpawner(this);
+        getLastPiece().GetComponent<Rigidbody2D>().drag = linearDrag;
+        getLastPiece().GetComponent<Rigidbody2D>().gravityScale = gravityScale;
     }
 
     public GameObject getLastPiece()

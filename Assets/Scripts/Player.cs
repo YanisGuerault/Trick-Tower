@@ -43,11 +43,15 @@ public class Player : MonoBehaviour
             invicibility = true;
             StartCoroutine("Invicibility");
         }
+        checkLife();
     }
 
     private void checkLife()
     {
-        //TODO
+        if(nbLives <= 0)
+        {
+            gameManager.endGame();
+        }
     }
     IEnumerator Invicibility()
     {

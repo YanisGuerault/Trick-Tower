@@ -47,13 +47,12 @@ public class CameraController : MonoBehaviour
             y0 = findLowestObject("Piece").transform.position.y - 2;
             y1 = findHighestObject("Piece").transform.position.y + 2;
 
-            Debug.Log(findHighestObject("Piece").GetComponent<MeshRenderer>().bounds);
 
             // Inconnus zc,yc (c = caméra) 
 
             zc = (y0 - y1) / (Mathf.Tan(Mathf.Deg2Rad * (thetax - fov / 2)) - Mathf.Tan(Mathf.Deg2Rad * (thetax + fov / 2)));
 
-            float z = Mathf.Round((y1 - y0) / 2) < 5 ? 5 : Mathf.Round((y1 - y0) / 2);
+            float z = Mathf.Round((y1 - y0) / 2) < 8 ? 8 : Mathf.Round((y1 - y0) / 2);
 
             if (zc < 5)
                 zc = 5;
