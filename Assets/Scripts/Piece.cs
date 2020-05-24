@@ -10,6 +10,7 @@ public class Piece : MonoBehaviour
     float lastPositionY;
     bool grounded;
     public Player player;
+    public bool allowRotation = true;
 
 
     private void Start()
@@ -63,10 +64,22 @@ public class Piece : MonoBehaviour
         spawner.SpawnNewBox();
     }
 
+    public void removeLastPiece()
+    {
+        spawner.removeAPiece(this.gameObject);
+        ground();
+        spawnNewPiece();
+
+        Destroy(this.gameObject);
+    }
+
     public void rotation()
     {
-        Quaternion rotationAmount = Quaternion.Euler(0, 0, 90);
-        transform.rotation *= rotationAmount;
+        if (allowRotation)
+        {
+            Quaternion rotationAmount = Quaternion.Euler(0, 0, 90);
+            transform.rotation *= rotationAmount;
+        }
     }
 
     public bool isGrounded()
