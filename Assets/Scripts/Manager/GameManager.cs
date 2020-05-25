@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     List<Player> playerList = new List<Player>();
     public Bonus[] listOfBonus;
     public Malus[] listOfMalus;
+    public float taillePlateau = 10;
 
     private void Start()
     {

@@ -44,22 +44,35 @@ public class CameraController : MonoBehaviour
     {
         if (findHighestObject("Piece") != null && findLowestObject("Piece") != null)
         {
-            y0 = findLowestObject("Piece").transform.position.y - 2;
-            y1 = findHighestObject("Piece").transform.position.y + 2;
+            y0 = findLowestObject("Piece").transform.position.y - 5;
+            y1 = findHighestObject("Piece").transform.position.y + 5;
 
 
             // Inconnus zc,yc (c = caméra) 
 
             zc = (y0 - y1) / (Mathf.Tan(Mathf.Deg2Rad * (thetax - fov / 2)) - Mathf.Tan(Mathf.Deg2Rad * (thetax + fov / 2)));
 
-            float z = Mathf.Round((y1 - y0) / 2) < 8 ? 8 : Mathf.Round((y1 - y0) / 2);
 
             if (zc < 5)
                 zc = 5;
 
             yc = y0 + zc * Mathf.Tan(Mathf.Deg2Rad * (thetax + fov / 2)) + 1;
 
-            yc = yc < firstPosition.y-1 ? firstPosition.y : yc+2;
+            yc = yc < firstPosition.y-1 ? firstPosition.y : yc+5;
+
+            float newSize = 0;
+
+            if (y0 + Camera.main.orthographicSize < yc)
+            {
+                newSize = yc - y0;
+            }
+
+            if(y1 - Camera.main.orthographicSize > yc && y1 - yc > newSize )
+            {
+                newSize = y1 - yc;
+            }
+
+            float z = newSize <= 12 ? 12 : Mathf.Round(newSize);
 
 
             for (int i = 0; i < spawner.Length; i++)
