@@ -12,8 +12,8 @@ public class SpawnBox : MonoBehaviour
 
     private List<GameObject> pieces = new List<GameObject>();
 
-    public float linearDrag = 25;
-    public float gravityScale = 1;
+    public float linearDrag = 15;
+    public float gravityScale = 1.5f;
 
     void Start()
     {

@@ -10,8 +10,8 @@ public class Player : MonoBehaviour
     public SpawnBox spawner;
     public bool commandsEnable = true;
     bool invicibility;
-    Bonus bonus;
-    Malus malus;
+    Bonus bonus = null;
+    Malus malus = null;
     GameManager gameManager;
 
 
@@ -21,8 +21,8 @@ public class Player : MonoBehaviour
     {
         nbLives = nbLivesStart;
         invicibility = false;
-        bonus = new Liane();
-        malus = new Grossisement();
+        /*bonus = new Liane();
+        malus = new Grossisement();*/
         gameManager = FindObjectOfType<GameManager>();
     }
 
@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
         //Debug.Log("Player "+ controls +" life :" + nbLives);
         keyControl();
         spawner.changeSimulate(gameManager.getOnPause());
+        Debug.Log("Player : " + controls + " | Bonus : " + bonus + " | Malus : " + malus);
     }
 
     public void removeLife()
@@ -138,6 +139,11 @@ public class Player : MonoBehaviour
         return bonus;
     }
 
+    public void setBonus(Bonus bonus)
+    {
+        this.bonus = bonus;
+    }
+
     public void removeBonus()
     {
         bonus = null;
@@ -146,6 +152,11 @@ public class Player : MonoBehaviour
     public Malus getMalus()
     {
         return malus;
+    }
+
+    public void setMalus(Malus malus)
+    {
+        this.malus = malus;
     }
 
     public void removeMalus()

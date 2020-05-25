@@ -150,6 +150,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93789a50cf170e543bbc52e6c4c546fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  listOfBonus:
+  - {fileID: 11500000, guid: bfb4a475c065f60468ea7eb90fc2a36e, type: 3}
+  - {fileID: 11500000, guid: 06a75e3cdfe13d44ea233d4a6e16287a, type: 3}
+  - {fileID: 11500000, guid: 8d7fc55084e52f14cac2a0503abb038f, type: 3}
+  listOfMalus:
+  - {fileID: 11500000, guid: 968428c9578eb434cb9f3e67317b1420, type: 3}
+  - {fileID: 11500000, guid: 9f2bbf7ec9d92c040abcaa1eafcc272a, type: 3}
+  - {fileID: 11500000, guid: a47fc2ec794f6c442bdbe94012f28ddf, type: 3}
 --- !u!4 &90702927
 Transform:
   m_ObjectHideFlags: 0
