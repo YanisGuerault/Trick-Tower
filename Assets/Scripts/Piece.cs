@@ -26,18 +26,19 @@ public class Piece : MonoBehaviour
 
         if ((this.transform.position.y - GameObject.FindGameObjectWithTag("Ground").transform.position.y) < 0)
         {
-            // Remove bloc
-            // Retire one life
-            // 
-
-            spawner.removeAPiece(this.gameObject);
-            ground();
-            player.removeLife();
 
             if(spawner.getLastPiece() == this.gameObject)
             {
+                spawner.removeAPiece(this.gameObject);
                 spawnNewPiece();
             }
+            else
+            {
+                spawner.removeAPiece(this.gameObject);
+            }
+  
+            ground();
+            player.removeLife();
 
             Destroy(this.gameObject);
 

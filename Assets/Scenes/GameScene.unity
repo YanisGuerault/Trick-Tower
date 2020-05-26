@@ -183,6 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93789a50cf170e543bbc52e6c4c546fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actualState: 0
+  nbPlayers: 2
   listOfBonus:
   - {fileID: 1859907481}
   - {fileID: 1109851762}
@@ -191,6 +193,10 @@ MonoBehaviour:
   - {fileID: 1054166370}
   - {fileID: 349937638}
   - {fileID: 1915432872}
+  traySize: 10
+  nbPiecesBase: 64
+  nbPiecesAvailable: 0000000000000000
+  spawnBox: []
 --- !u!4 &90702927
 Transform:
   m_ObjectHideFlags: 0
@@ -384,6 +390,7 @@ MonoBehaviour:
   controls: 0
   spawner: {fileID: 172445775}
   commandsEnable: 1
+  nbLives: 0
 --- !u!114 &172445775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -739,6 +746,7 @@ MonoBehaviour:
   controls: 1
   spawner: {fileID: 403591539}
   commandsEnable: 1
+  nbLives: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,9 +786,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca8b25515b8568a49aba65ca583c4dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerList:
-  - {fileID: 403591546}
-  - {fileID: 172445774}
   ground: {fileID: 141729047}
   cameraSmooth: 0.2
   target: {fileID: 0}
@@ -976,6 +981,7 @@ MonoBehaviour:
   controls: 0
   spawner: {fileID: 531573419}
   commandsEnable: 1
+  nbLives: 0
 --- !u!1 &805268440
 GameObject:
   m_ObjectHideFlags: 0

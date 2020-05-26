@@ -10,12 +10,13 @@ public class Player : MonoBehaviour
     public SpawnBox spawner;
     public bool commandsEnable = true;
     bool invicibility;
+    bool stopPiece = false;
     Bonus bonus = null;
     Malus malus = null;
     GameManager gameManager;
 
 
-    private int nbLives;
+    [SerializeField] private int nbLives;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +32,7 @@ public class Player : MonoBehaviour
     {
         //Debug.Log("Player "+ controls +" life :" + nbLives);
         keyControl();
-        spawner.changeSimulate(gameManager.getOnPause());
+        //spawner.changeSimulate(gameManager.getOnPause());
         Debug.Log("Player : " + controls + " | Bonus : " + bonus + " | Malus : " + malus);
     }
 
@@ -40,7 +41,6 @@ public class Player : MonoBehaviour
         if (!invicibility)
         {
             nbLives -= 1;
-            checkLife();
             invicibility = true;
             StartCoroutine("Invicibility");
         }

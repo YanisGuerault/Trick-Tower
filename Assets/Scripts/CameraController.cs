@@ -5,12 +5,12 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     Transform[] spawner;
-    public List<Player> playerList;
     public Transform ground;
     public float cameraSmooth = 1.0f;
     private float delta;
     private Vector3 velocity = Vector3.zero;
     private Vector3 firstPosition;
+    GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -23,12 +23,12 @@ public class CameraController : MonoBehaviour
             spawner[i] = go.transform;
             i++;
         }
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     public Transform target;
     float zc = 0;
     float yc = 0;
-    float xc = 0;
     float fov = 0;
     float thetax;
     float y0 = -4;
@@ -90,7 +90,7 @@ public class CameraController : MonoBehaviour
             // Smoothly move the camera towards that target position 
             transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, yc, transform.position.z), ref velocity, cameraSmooth);
 
-            foreach (Player p in playerList)
+            foreach (Player p in gameManager.getPlayerList())
             {
                 Vector3 lastPosition = p.spawner.getLastPiece().transform.position;
                 if (lastPosition.y > transform.position.y + GetComponent<Camera>().orthographicSize)
@@ -143,8 +143,8 @@ public class CameraController : MonoBehaviour
     GameObject[] findHighestObjectPerPlayer(string tag)
     {
         GameObject[] pieceList = GameObject.FindGameObjectsWithTag(tag);
-        GameObject[] highestPiece = new GameObject[playerList.Count];
-        float[] highestPiecePosition = new float[playerList.Count];
+        GameObject[] highestPiece = new GameObject[gameManager.getPlayerList().Count];
+        float[] highestPiecePosition = new float[gameManager.getPlayerList().Count];
 
         for(int i = 0; i < highestPiecePosition.Length;i++)
         {
@@ -154,7 +154,7 @@ public class CameraController : MonoBehaviour
         for (int i = 0; i < pieceList.Length; i++)
         {
             float y = pieceList[i].transform.position.y;
-            int playerIdx = playerList.IndexOf(pieceList[i].GetComponent<Piece>().player);
+            int playerIdx = gameManager.getPlayerList().IndexOf(pieceList[i].GetComponent<Piece>().player);
             if (pieceList[i].GetComponent<Piece>().isGrounded() && y > highestPiecePosition[playerIdx])
             {
                 highestPiecePosition[playerIdx] = y;

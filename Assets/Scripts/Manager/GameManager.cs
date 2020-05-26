@@ -5,13 +5,19 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public enum State { Play, Pause, End};
     bool onPause = false;
     bool coroutineSave = false;
     bool attributeBonusMalus = false;
     List<Player> playerList = new List<Player>();
+    [SerializeField] State actualState = State.Play;
+    public int nbPlayers = 2;
     public Bonus[] listOfBonus;
     public Malus[] listOfMalus;
-    public float taillePlateau = 10;
+    public float traySize = 10;
+    public int nbPiecesBase = 64;
+    public int[] nbPiecesAvailable;
+    public SpawnBox[] spawnBox;
 
     private void Start()
     {
@@ -19,6 +25,20 @@ public class GameManager : MonoBehaviour
         {
             playerList.Add(p.GetComponent<Player>());
             bonusAndMalusAttribution(p.GetComponent<Player>());
+        }
+
+        nbPiecesAvailable = new int[nbPlayers];
+        for(int i = 0; i < nbPlayers; i++)
+        {
+            nbPiecesAvailable[i] = nbPiecesBase;
+        }
+
+        spawnBox = new SpawnBox[nbPlayers];
+        int y = 0;
+        foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Spawn Box"))
+        {
+            spawnBox[y] = obj.GetComponent<SpawnBox>();
+            y++;
         }
     }
 
@@ -49,15 +69,20 @@ public class GameManager : MonoBehaviour
     {
         if (!coroutineSave)
         {
+            actualState = State.Pause;
             onPause = !onPause;
-            foreach (GameObject piece in GameObject.FindGameObjectsWithTag("Piece"))
+
+            startStopAllPhysics(!onPause);
+
+            if(onPause)
             {
-                piece.GetComponent<Rigidbody2D>().simulated = !onPause;
+                actualState = State.Pause;
             }
-            foreach(Player p in playerList)
+            else
             {
-                p.commandsEnable = !onPause;
+                actualState = State.Play;
             }
+
             coroutineSave = true;
             StartCoroutine(waitAfterPause());
         }
@@ -65,7 +90,8 @@ public class GameManager : MonoBehaviour
 
     public void endGame()
     {
-
+        actualState = State.End;
+        startStopAllPhysics(false);
     }
 
     IEnumerator waitAfterPause()
@@ -79,5 +105,33 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(15f);
         attributeBonusMalus = true;
         bonusAndMalusAttribution(player);
+    }
+
+    public bool retireAPiece(Player p)
+    {
+        int playerIdx = getPlayerList().IndexOf(p);
+        if(nbPiecesAvailable[playerIdx] <= 0 )
+        {
+            return false;
+        }
+        nbPiecesAvailable[playerIdx] -= 1;
+        return true;
+    }
+
+    public List<Player> getPlayerList()
+    {
+        return playerList;
+    }
+
+    private void startStopAllPhysics(bool condition)
+    {
+        foreach (SpawnBox sb in spawnBox)
+        {
+            sb.changeSimulate(condition);
+        }
+        foreach (Player p in playerList)
+        {
+            p.commandsEnable = condition;
+        }
     }
 }
