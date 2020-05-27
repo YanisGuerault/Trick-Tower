@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     bool onPause = false;
     bool coroutineSave = false;
     bool attributeBonusMalus = false;
-    List<Player> playerList = new List<Player>();
+    [SerializeField] List<Player> playerList = new List<Player>();
     [SerializeField] State actualState = State.Play;
     public int nbPlayers = 2;
     public Bonus[] listOfBonus;
@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     public int nbPiecesBase = 64;
     public int[] nbPiecesAvailable;
     public SpawnBox[] spawnBox;
+    public int nbLives;
+
+    public static bool isReady = false;
 
     private void Start()
     {
@@ -40,6 +43,10 @@ public class GameManager : MonoBehaviour
             spawnBox[y] = obj.GetComponent<SpawnBox>();
             y++;
         }
+
+        FindObjectOfType<HudManager>().HUDStart();
+
+        GameManager.isReady = true;
     }
 
     private void FixedUpdate()

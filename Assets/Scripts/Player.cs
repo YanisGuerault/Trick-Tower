@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public int identifiant;
     public enum Controls { ZQSD, Arrow };
-    public int nbLivesStart;
     public Controls controls;
     public SpawnBox spawner;
     public bool commandsEnable = true;
@@ -14,17 +14,20 @@ public class Player : MonoBehaviour
     Bonus bonus = null;
     Malus malus = null;
     GameManager gameManager;
+    HudManager hudManager;
+
 
 
     [SerializeField] private int nbLives;
     // Start is called before the first frame update
     void Start()
     {
-        nbLives = nbLivesStart;
+        gameManager = FindObjectOfType<GameManager>();
+        hudManager = FindObjectOfType<HudManager>();
+        nbLives = gameManager.nbLives;
         invicibility = false;
         /*bonus = new Liane();
         malus = new Grossisement();*/
-        gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
@@ -43,6 +46,7 @@ public class Player : MonoBehaviour
             nbLives -= 1;
             invicibility = true;
             StartCoroutine("Invicibility");
+            hudManager.retireALive(this, nbLives);
         }
         checkLife();
     }
