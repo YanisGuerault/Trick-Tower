@@ -127,6 +127,14 @@ public class Player : MonoBehaviour
                     {
                         spawner.getLastPieceComponent().movePiece(-1);
                     }
+                    if (Input.GetKeyDown(KeyCode.T))
+                    {
+                        ActivateBonus();
+                    }
+                    if (Input.GetKeyDown(KeyCode.G))
+                    {
+                        ActivateMalus();
+                    }
                     break;
             }
         }
@@ -170,16 +178,26 @@ public class Player : MonoBehaviour
 
     public void ActivateBonus()
     {
-        bonus.Activate(spawner.getLastPiece());
-        removeBonus();
-        removeMalus();
+        if (bonus != null)
+        {
+            bonus.Activate(spawner.getLastPiece());
+            hudManager.eraseBonus(this);
+            hudManager.eraseMalus(this);
+            removeBonus();
+            removeMalus();
+        }
     }
 
     public void ActivateMalus()
     {
-        malus.Activate(spawner.getLastPiece());
-        removeBonus();
-        removeMalus();
+        if (malus != null)
+        {
+            malus.Activate(spawner.getLastPiece());
+            hudManager.eraseBonus(this);
+            hudManager.eraseMalus(this);
+            removeBonus();
+            removeMalus();
+        }
     }
 
 }

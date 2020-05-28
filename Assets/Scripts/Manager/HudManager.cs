@@ -24,6 +24,8 @@ public class HudManager : MonoBehaviour
         foreach(Player p in gameManager.getPlayerList())
         {
             getRootHUD.Add(p.identifiant, root.gameObject.transform.Find("Joueur" + p.identifiant).gameObject);
+            eraseBonus(p);
+            eraseMalus(p);
         }
     }
 
@@ -53,6 +55,56 @@ public class HudManager : MonoBehaviour
                 coeurRoot.GetChild(i).gameObject.GetComponent<Image>().sprite = coeurVie;
             }
         }
+    }
+
+    public void changePieceCompteur(Player p, int nbPiecesRestant)
+    {
+        GameObject parentRoot = null;
+        getRootHUD.TryGetValue(p.identifiant, out parentRoot);
+        Transform compteur = parentRoot.transform.Find("Compteur");
+        compteur.gameObject.GetComponent<Text>().text = nbPiecesRestant.ToString(); 
+    }
+
+    public void changeBonus(Player p, Bonus b)
+    {
+        GameObject parentRoot = null;
+        getRootHUD.TryGetValue(p.identifiant, out parentRoot);
+        Transform bonus = parentRoot.transform.Find("Bonus");
+        bonus.gameObject.GetComponent<Image>().sprite = b.icone;
+        bonus.gameObject.GetComponent<Image>().enabled = true;
+    }
+
+    public void changeMalus(Player p, Malus m)
+    {
+        GameObject parentRoot = null;
+        getRootHUD.TryGetValue(p.identifiant, out parentRoot);
+        Transform malus = parentRoot.transform.Find("Malus");
+        malus.gameObject.GetComponent<Image>().sprite = m.icone;
+        malus.gameObject.GetComponent<Image>().enabled = true;
+    }
+
+    public void eraseBonus(Player p)
+    {
+        GameObject parentRoot = null;
+        getRootHUD.TryGetValue(p.identifiant, out parentRoot);
+        Transform bonus = parentRoot.transform.Find("Bonus");
+        bonus.gameObject.GetComponent<Image>().enabled = false;
+        bonus.gameObject.GetComponent<Image>().sprite = null;
+        
+    }
+
+    public void eraseMalus(Player p)
+    {
+        GameObject parentRoot = null;
+        getRootHUD.TryGetValue(p.identifiant, out parentRoot);
+        Transform bonus = parentRoot.transform.Find("Malus");
+        bonus.gameObject.GetComponent<Image>().enabled = false;
+        bonus.gameObject.GetComponent<Image>().sprite = null;
+    }
+
+    public Canvas GetCanvas()
+    {
+        return root;
     }
 
     // Update is called once per frame

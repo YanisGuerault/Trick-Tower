@@ -6,19 +6,13 @@ public class Ice : Malus
 {
     public PhysicsMaterial2D iceMaterial;
     // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     protected override void Activation(GameObject piece)
     {
-        piece.GetComponent<BoxCollider2D>().sharedMaterial = iceMaterial;
+        foreach(BoxCollider2D collid in piece.GetComponents<BoxCollider2D>())
+        {
+            collid.sharedMaterial = iceMaterial;
+        }
         piece.GetComponent<Rigidbody2D>().sharedMaterial = iceMaterial;
+        piece.AddComponent<Ice>();
     }
 }

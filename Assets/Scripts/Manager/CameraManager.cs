@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraManager : MonoBehaviour
 {
     Transform[] spawner;
-    public Transform ground;
     public float cameraSmooth = 1.0f;
     private float delta;
     private Vector3 velocity = Vector3.zero;
     private Vector3 firstPosition;
     GameManager gameManager;
+    HudManager hudManager;
 
     // Start is called before the first frame update
     void Start()
@@ -24,9 +24,9 @@ public class CameraController : MonoBehaviour
             i++;
         }
         gameManager = FindObjectOfType<GameManager>();
+        hudManager = FindObjectOfType<HudManager>();
     }
 
-    public Transform target;
     float zc = 0;
     float yc = 0;
     float fov = 0;
@@ -58,7 +58,8 @@ public class CameraController : MonoBehaviour
 
             yc = y0 + zc * Mathf.Tan(Mathf.Deg2Rad * (thetax + fov / 2)) + 1;
 
-            yc = yc < firstPosition.y-1 ? firstPosition.y : yc+5;
+            yc = yc < firstPosition.y-5 ? firstPosition.y : yc+5;
+
 
             float newSize = 0;
 
@@ -72,7 +73,7 @@ public class CameraController : MonoBehaviour
                 newSize = y1 - yc;
             }
 
-            float z = newSize <= 12 ? 12 : Mathf.Round(newSize);
+            float z = newSize <= 18 ? 18 : Mathf.Round(newSize);
 
 
             for (int i = 0; i < spawner.Length; i++)
@@ -89,7 +90,7 @@ public class CameraController : MonoBehaviour
 
             // Smoothly move the camera towards that target position 
             transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, yc, transform.position.z), ref velocity, cameraSmooth);
-
+            hudManager.GetCanvas().transform.position = Vector3.SmoothDamp(hudManager.GetCanvas().transform.position, new Vector3(hudManager.GetCanvas().transform.position.x, 10, hudManager.GetCanvas().transform.position.z),ref velocity, cameraSmooth);
             foreach (Player p in gameManager.getPlayerList())
             {
                 Vector3 lastPosition = p.spawner.getLastPiece().transform.position;
