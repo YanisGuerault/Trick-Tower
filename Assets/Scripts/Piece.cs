@@ -100,9 +100,9 @@ public class Piece : MonoBehaviour
 
     public void movePiece(int direction)
     {
-        if(direction > 0)
+        if(direction > 0 && (transform.position.x + .5f) < (spawner.ground.position.x +  spawner.ground.localScale.x + 2))
             transform.position = new Vector3(transform.position.x + .5f, transform.position.y, transform.position.z);
-        else if(direction < 0)
+        else if(direction < 0 && (transform.position.x - .5f) > (spawner.ground.position.x - spawner.ground.localScale.x - 2))
             transform.position = new Vector3(transform.position.x - .5f, transform.position.y, transform.position.z);
     }
 

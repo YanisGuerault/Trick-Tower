@@ -5,7 +5,7 @@ using UnityEngine;
 public class Liane : Bonus
 {
     List<GameObject> objectWithJoin = new List<GameObject>();
-    bool activate = false;
+    bool activate = true;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -22,7 +22,6 @@ public class Liane : Bonus
     public override void Activate(GameObject piece)
     {
         piece.AddComponent<Liane>();
-        activate = true;
     }
 
     IEnumerator endEffect()

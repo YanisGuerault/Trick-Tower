@@ -22,12 +22,17 @@ public class GameManager : MonoBehaviour
 
     public static bool isReady = false;
 
+    private HudManager hudManager;
+
     private void Start()
     {
-        foreach(GameObject p in GameObject.FindGameObjectsWithTag("Spawn Box"))
+        hudManager = FindObjectOfType<HudManager>();
+
+        foreach (GameObject p in GameObject.FindGameObjectsWithTag("Spawn Box"))
         {
             playerList.Add(p.GetComponent<Player>());
-            bonusAndMalusAttribution(p.GetComponent<Player>());
+            //bonusAndMalusAttribution(p.GetComponent<Player>());
+            StartCoroutine(reloadBonus(p.GetComponent<Player>()));
         }
 
         nbPiecesAvailable = new int[nbPlayers];
@@ -44,27 +49,38 @@ public class GameManager : MonoBehaviour
             y++;
         }
 
-        FindObjectOfType<HudManager>().HUDStart();
+        hudManager.HUDStart();
 
         GameManager.isReady = true;
+
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
+        {
+            changePauseState();
+        }
+
+        /*if(hudManager.pauseActive && Input.GetKeyDown(KeyCode.Escape))
+        {
+            changePauseState();
+        }*/
     }
 
     private void bonusAndMalusAttribution(Player player)
     {
-        if(!attributeBonusMalus)
+        if (player.getBonus() == null && player.getMalus() == null)
         {
-            StartCoroutine(reloadBonus(player));
-        } else {
             int bonusRandom = UnityEngine.Random.Range(0, listOfBonus.Length);
             int malusRandom = UnityEngine.Random.Range(0, listOfMalus.Length);
             player.setBonus(listOfBonus[bonusRandom]);
             player.setMalus(listOfMalus[malusRandom]);
+            hudManager.changeBonus(player, listOfBonus[bonusRandom]);
+            hudManager.changeMalus(player, listOfMalus[malusRandom]);
         }
+
+        StartCoroutine(reloadBonus(player));
     }
 
     public bool getOnPause()
@@ -91,6 +107,7 @@ public class GameManager : MonoBehaviour
             }
 
             coroutineSave = true;
+            hudManager.Pause();
             StartCoroutine(waitAfterPause());
         }
     }
@@ -110,7 +127,6 @@ public class GameManager : MonoBehaviour
     IEnumerator reloadBonus(Player player)
     {
         yield return new WaitForSeconds(15f);
-        attributeBonusMalus = true;
         bonusAndMalusAttribution(player);
     }
 
@@ -122,6 +138,7 @@ public class GameManager : MonoBehaviour
             return false;
         }
         nbPiecesAvailable[playerIdx] -= 1;
+        hudManager.changePieceCompteur(p, nbPiecesAvailable[playerIdx]);
         return true;
     }
 

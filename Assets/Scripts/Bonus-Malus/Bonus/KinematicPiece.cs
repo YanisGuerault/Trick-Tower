@@ -4,21 +4,18 @@ using UnityEngine;
 
 public class KinematicPiece : Bonus
 {
-    private bool activation = false;
-    private Rigidbody2D piece = null;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if ((collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Piece") && collision.rigidbody != null && activation)
+        if ((collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Piece") && collision.rigidbody != null)
         {
-            piece.simulated = false;
+            this.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         }
-        activation = false;
     }
 
     public override void Activate(GameObject piece)
     {
-        activation = true;
-        this.piece = piece.GetComponent<Rigidbody2D>();
+        //this.piece = piece.GetComponent<Rigidbody2D>();
+        piece.AddComponent<KinematicPiece>();
     }
 }

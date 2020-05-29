@@ -7,6 +7,7 @@ public class SpawnBox : MonoBehaviour
 {
 
     public Player player;
+    public Transform ground;
 
     public GameObject[] boxList;
 
@@ -16,7 +17,6 @@ public class SpawnBox : MonoBehaviour
     public float gravityScale = 1.5f;
 
     GameManager gameManager;
-
     void Start()
     {
         SpawnNewBox();
@@ -34,6 +34,7 @@ public class SpawnBox : MonoBehaviour
             getLastPiece().GetComponent<Piece>().setSpawner(this);
             getLastPiece().GetComponent<Rigidbody2D>().drag = linearDrag;
             getLastPiece().GetComponent<Rigidbody2D>().gravityScale = gravityScale;
+
         }
     }
 

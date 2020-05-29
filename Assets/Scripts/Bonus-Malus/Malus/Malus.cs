@@ -4,12 +4,7 @@ using UnityEngine;
 
 public abstract class Malus : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
+    public Sprite icone;
     public void Activate(GameObject piece)
     {
         foreach(GameObject spawn in GameObject.FindGameObjectsWithTag("Spawn Box"))
@@ -24,10 +19,4 @@ public abstract class Malus : MonoBehaviour
     }
 
     protected abstract void Activation(GameObject piece);
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
