@@ -7,6 +7,7 @@ public class SpawnBox : MonoBehaviour
 {
 
     public Player player;
+    public Transform ground;
 
     public GameObject[] boxList;
 

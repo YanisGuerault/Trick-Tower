@@ -139,11 +139,6 @@ public class Player : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            gameManager.changePauseState();
-        }
-
     }
 
     public Bonus getBonus()

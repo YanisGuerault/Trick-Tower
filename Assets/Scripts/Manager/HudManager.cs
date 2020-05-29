@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HudManager : MonoBehaviour
@@ -9,11 +10,15 @@ public class HudManager : MonoBehaviour
     //Dictionnaire de dictionnaire, chemin : Dictionnaire all -> Dictionnaire par player -> Tableau d'images bonus ou lives
     // Pour all, clé = int (identifiant du player), pour player, clé = int (0 = lives et 1 = bonus)
     //public Dictionary<int,Dictionary<int, Image[]>> all = new Dictionary<int, Dictionary<int, Image[]>>();
+    public bool pauseActive = false;
     public Sprite coeurVie;
     public Sprite coeurMort;
     public Dictionary<int, GameObject> getRootHUD = new Dictionary<int, GameObject>();
     public Canvas root;
     public int nbLives;
+    public GameObject pausePanel;
+    public Sprite[] bgList;
+    public SpriteRenderer bg;
 
     GameManager gameManager;
 
@@ -23,10 +28,18 @@ public class HudManager : MonoBehaviour
 
         foreach(Player p in gameManager.getPlayerList())
         {
-            getRootHUD.Add(p.identifiant, root.gameObject.transform.Find("Joueur" + p.identifiant).gameObject);
+            getRootHUD.Add(p.identifiant, root.gameObject.transform.Find("Joueurs").Find("Joueur" + p.identifiant).gameObject);
             eraseBonus(p);
             eraseMalus(p);
         }
+
+        if(pausePanel.activeSelf)
+        {
+            pausePanel.SetActive(false);
+        }
+
+        int i = Random.Range(0, bgList.Length);
+        bg.sprite = bgList[i];
     }
 
     public void retireALive(Player p, int nbLivesRestant)
@@ -107,9 +120,19 @@ public class HudManager : MonoBehaviour
         return root;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Pause()
     {
-        
+        pauseActive = !pauseActive;
+        pausePanel.SetActive(pauseActive);
+    }
+
+    public void Retour()
+    {
+        gameManager.changePauseState();
+    }
+
+    public void Menu()
+    {
+        SceneManager.LoadScene("MenuScene");
     }
 }

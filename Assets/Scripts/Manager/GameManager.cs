@@ -55,9 +55,17 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
+        {
+            changePauseState();
+        }
+
+        /*if(hudManager.pauseActive && Input.GetKeyDown(KeyCode.Escape))
+        {
+            changePauseState();
+        }*/
     }
 
     private void bonusAndMalusAttribution(Player player)
@@ -99,6 +107,7 @@ public class GameManager : MonoBehaviour
             }
 
             coroutineSave = true;
+            hudManager.Pause();
             StartCoroutine(waitAfterPause());
         }
     }
