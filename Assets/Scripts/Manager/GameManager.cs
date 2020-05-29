@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public int[] nbPiecesAvailable;
     public SpawnBox[] spawnBox;
     public int nbLives;
+    int nbPlayersAlives;
 
     public static bool isReady = false;
 
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
         }
 
         hudManager.HUDStart();
+        nbPlayersAlives = playerList.Count;
 
         GameManager.isReady = true;
 
@@ -116,6 +118,53 @@ public class GameManager : MonoBehaviour
     {
         actualState = State.End;
         startStopAllPhysics(false);
+        if(nbPlayers == 1)
+        {
+            if (nbPiecesAvailable[0] <= 0)
+            {
+                //set pane win
+            }
+            else
+            {
+                //set pane loose
+            }
+        }
+        else
+        {
+            List<Player> playersAlive = new List<Player>();
+            for(int i = 0; i < nbPlayers; i++)
+            {
+                if(playerList[i].getLives() > 0)
+                {
+                    playersAlive.Add(playerList[i]);
+                }
+            }
+            if(playersAlive.Count == 1)
+            {
+                //set pane win for joueur
+            }
+            else
+            {
+                for (int i = 0; i < nbPlayers; i++)
+                {
+                    if (nbPiecesAvailable[playerList[i].identifiant] <= 0)
+                    {
+                        //set this player to win
+                        break;
+                    }
+                }
+            }
+            //Si le code arrive ici c'est qu'il y a un soucis
+        }
+    }
+
+    public void aPlayerDie(Player p)
+    {
+        nbPlayersAlives -= 1;
+        if(nbPlayersAlives <= 1)
+        {
+            endGame();
+        }
     }
 
     IEnumerator waitAfterPause()

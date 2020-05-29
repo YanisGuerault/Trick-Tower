@@ -51,11 +51,16 @@ public class Player : MonoBehaviour
         checkLife();
     }
 
+    public int getLives()
+    {
+        return nbLives;
+    }
+
     private void checkLife()
     {
         if(nbLives <= 0)
         {
-            gameManager.endGame();
+            gameManager.aPlayerDie(this);
         }
     }
     IEnumerator Invicibility()
