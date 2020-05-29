@@ -1,0 +1,65 @@
+Instructions du jeu :
+	- Contrôles : Pour le joueur 1 -> touches Q et D pour les déplacements horizontaux, Z pour la rotation de pièce et S pour accelérer la descente
+					touche T pour utiliser le bonus, touche G pour le malus
+		      Pour le joueur 2 -> touches flèches droite et gauche pour les déplacements horizontaux, flèche haut pour la rotation de pièce et flèche bas pour accelérer la descente
+					touche O pour utiliser le bonus, touche L pour le malus
+		      Pour tous les joueurs -> Touche P ou Echap pour avoir le menu Pause
+	
+	- Condition de victoire : Poser les 64 pièces ou rester en vie
+	
+	- Condition de défaite : Ne pas réussir à poser les 64 pièces et perdre les 3 vies
+
+	- Bonus : Récuperer une vie, 
+
+Remarques particulières : 
+	- Limitations : 
+	- Bugs connus : Pièce infini lorsque un jour joue très vite avec la caméra proche du bord (Cela est dû au faite que les pièces redescende au niveau du bord de la caméra lors d'une descente de celle-ci, notamment dans le cas ou une tour tomberait)
+	- Voies d'amélioration : rajout de bonus/malus, rajout de mode de jeu (énigme et course), amélioration des textures, création de nouvelles pièces
+	
+Eléments techniques :
+	- Points techniques critiques du projet : 
+		- Gestion de la physique pour la descente des objets.
+		- Gestion de la caméra qui doit suivre permettre de suivre les joueurs, peu importe la différence de hauteur entre les tours
+		- Gestion des bonus et des malus (utilisation de joints physiques, création d'un Physic material pour un objet de glace)
+
+	- Recherche d'outils mathématiques : 
+		- Ayant utilisé la physique de Unity, il n'y a pas eu de recherche vis-à-vis d'algorithmes de résolutions et les parties mathématiques du projet ont été résolus pour la plupart à l'aide de bon sens et de réflexion personnel.
+		  Les joints physics ayant été vus en cours il n'y a pas eu besoin de recherches complémentaires. Cependant cela a été nécessaire pour créer un objet qui reproduit une physique comme sur de la glace.
+		
+		https://answers.unity.com/questions/867610/adding-joints-through-script.html
+		https://www.youtube.com/watch?time_continue=531&v=uQ6fGtdERlY&feature=emb_logo
+		https://answers.unity.com/questions/1485212/how-do-i-change-a-physics-material-through-a-scrip.html
+
+ 
+	- Recherche de plugins : 
+		- Utilisation du plugin github pour le versionning
+
+	- Bibliographie des recherches :
+		https://noobtuts.com/unity/2d-tetris-game/
+		https://github.com/ryukinix/tetris
+		https://answers.unity.com/questions/1417767/c-how-to-check-if-player-is-grounded.html
+		https://docs.unity3d.com/ScriptReference/KeyCode.html
+		https://docs.unity3d.com/Manual/class-PhysicsManager.html
+		https://docs.unity3d.com/ScriptReference/Physics-gravity.html
+		https://answers.unity.com/questions/656129/c-changing-the-x-and-y-values-of-a-gameobject.html
+		https://forum.unity.com/threads/find-game-object-with-highest-y-value.325408/
+		https://docs.unity3d.com/Manual/CreateDestroyObjects.html
+		https://docs.unity3d.com/ScriptReference/Vector3.SmoothDamp.html
+		https://www.reddit.com/r/Unity3D/comments/3b3gh7/adding_single_axis_90_degrees_to_a/
+		https://answers.unity.com/questions/174448/stop-physics-without-using-timetimescale-0.html
+		https://www.youtube.com/watch?v=zc8ac_qUXQY
+		https://answers.unity.com/questions/464616/access-child-of-a-gameobject.html
+		https://forum.unity.com/threads/solved-change-ui-source-image.367215/
+
+
+	- Choix d'implémentation : 
+		- Tout le code aujourd'hui présent dans le jeu a été codé par nous-mêmes mis à part une fonction (Fixed Update du Caméra Manager qui viens d'une entraide avec le groupe de Benjamin Petiot et Juliette Taupin).
+   		  Le choix de tout coder de notre coté à été fait pour pouvoir avoir le controle sur le code source de notre projet et ainsi pouvoir personnaliser le fonctionnement à notre manière.
+		  Les fonctionnements sont personnalisés et adaptatifs à notre projet. Aujourd'hui mis à part quelques détails, le projet est capable d'accueillir N joueurs (si on omet la compatibilité de la HUD et des controls).
+		  Ce choix à donc permis d'avoir quelque chose de robuste par rapport à notre projet, de pouvoir faire un développement "from scratch" et sans superflu
+
+Origine des assets : 
+	- Création des modèles 3D fait main avec Blender 2.8
+
+	- Textures gratuites sur https://www.poliigon.com/
+	
