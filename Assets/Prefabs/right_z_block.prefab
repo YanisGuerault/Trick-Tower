@@ -110,7 +110,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 1
+  m_Mass: 3.98845
   m_LinearDrag: 25
   m_AngularDrag: 0
   m_GravityScale: 2
@@ -229,7 +229,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3033667219593020291, guid: de5a8d82da20b2f4aa8de4b74504fa72, type: 3}
+  - {fileID: 2100000, guid: 2ab5cbf360b05c64ba9d55a36e4ba592, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
