@@ -8,6 +8,7 @@ public class MenuManager : MonoBehaviour
     public Canvas canvas;
     public GameObject CreditPanel;
     public GameObject MenuPanel;
+    public GameObject SelectionPanel;
     public GameObject activePanel;
 
     private void Start()
@@ -15,9 +16,22 @@ public class MenuManager : MonoBehaviour
         activePanel = MenuPanel;
         CreditPanel.SetActive(false);
     }
-    public void Play()
+
+    private void Update()
     {
-        SceneManager.LoadScene("GameScene");
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Menu();
+        }
+    }
+    public void Play1J()
+    {
+        SceneManager.LoadScene("GameScene1J");
+    }
+
+    public void Play2J()
+    {
+        SceneManager.LoadScene("GameScene2J");
     }
 
     public void Quit()
@@ -25,18 +39,33 @@ public class MenuManager : MonoBehaviour
         Application.Quit(0);
     }
 
-    public void ChangePanel()
+    public void Menu()
     {
-        activePanel.SetActive(false);
-        if(activePanel == CreditPanel)
+        if(activePanel != MenuPanel)
         {
+            activePanel.SetActive(false);
+            MenuPanel.SetActive(true);
             activePanel = MenuPanel;
         }
-        else
+    }
+
+    public void Credits()
+    {
+        if (activePanel != CreditPanel)
         {
+            activePanel.SetActive(false);
+            CreditPanel.SetActive(true);
             activePanel = CreditPanel;
         }
-        activePanel.SetActive(true);
-        
+    }
+
+    public void Play()
+    {
+        if (activePanel != SelectionPanel)
+        {
+            activePanel.SetActive(false);
+            SelectionPanel.SetActive(true);
+            activePanel = SelectionPanel;
+        }
     }
 }

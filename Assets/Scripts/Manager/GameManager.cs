@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
     public enum State { Play, Pause, End};
     bool onPause = false;
     bool coroutineSave = false;
-    bool attributeBonusMalus = false;
     [SerializeField] List<Player> playerList = new List<Player>();
     [SerializeField] State actualState = State.Play;
     public int nbPlayers = 2;
@@ -72,14 +71,19 @@ public class GameManager : MonoBehaviour
 
     private void bonusAndMalusAttribution(Player player)
     {
-        if (player.getBonus() == null && player.getMalus() == null)
+        if (actualState == State.Play && player.getBonus() == null && player.getMalus() == null)
         {
+            if(nbPlayers > 1)
+            {
+                int malusRandom = UnityEngine.Random.Range(0, listOfMalus.Length);
+                player.setMalus(listOfMalus[malusRandom]);
+                hudManager.changeMalus(player, listOfMalus[malusRandom]);
+            }
+
             int bonusRandom = UnityEngine.Random.Range(0, listOfBonus.Length);
-            int malusRandom = UnityEngine.Random.Range(0, listOfMalus.Length);
             player.setBonus(listOfBonus[bonusRandom]);
-            player.setMalus(listOfMalus[malusRandom]);
             hudManager.changeBonus(player, listOfBonus[bonusRandom]);
-            hudManager.changeMalus(player, listOfMalus[malusRandom]);
+            
         }
 
         StartCoroutine(reloadBonus(player));
@@ -116,17 +120,19 @@ public class GameManager : MonoBehaviour
 
     public void endGame()
     {
-        actualState = State.End;
-        startStopAllPhysics(false);
         if(nbPlayers == 1)
         {
             if (nbPiecesAvailable[0] <= 0)
             {
-                //set pane win
+                hudManager.WinPane();
+                actualState = State.End;
+                startStopAllPhysics(false);
             }
             else
             {
-                //set pane loose
+                hudManager.LoosePane();
+                actualState = State.End;
+                startStopAllPhysics(false);
             }
         }
         else
@@ -141,7 +147,9 @@ public class GameManager : MonoBehaviour
             }
             if(playersAlive.Count == 1)
             {
-                //set pane win for joueur
+                hudManager.WinPane(playersAlive[0]);
+                actualState = State.End;
+                startStopAllPhysics(false);
             }
             else
             {
@@ -149,7 +157,9 @@ public class GameManager : MonoBehaviour
                 {
                     if (nbPiecesAvailable[playerList[i].identifiant] <= 0)
                     {
-                        //set this player to win
+                        hudManager.WinPane(playerList[i]);
+                        actualState = State.End;
+                        startStopAllPhysics(false);
                         break;
                     }
                 }
@@ -161,15 +171,12 @@ public class GameManager : MonoBehaviour
     public void aPlayerDie(Player p)
     {
         nbPlayersAlives -= 1;
-        if(nbPlayersAlives <= 1)
-        {
-            endGame();
-        }
+        endGame();
     }
 
     IEnumerator waitAfterPause()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         coroutineSave = false;
     }
 
@@ -184,6 +191,7 @@ public class GameManager : MonoBehaviour
         int playerIdx = getPlayerList().IndexOf(p);
         if(nbPiecesAvailable[playerIdx] <= 0 )
         {
+            endGame();
             return false;
         }
         nbPiecesAvailable[playerIdx] -= 1;

@@ -19,6 +19,7 @@ public class HudManager : MonoBehaviour
     public GameObject pausePanel;
     public Sprite[] bgList;
     public SpriteRenderer bg;
+    public GameObject winLoose;
 
     GameManager gameManager;
 
@@ -40,6 +41,7 @@ public class HudManager : MonoBehaviour
 
         int i = Random.Range(0, bgList.Length);
         bg.sprite = bgList[i];
+        winLoose.SetActive(false);
     }
 
     public void retireALive(Player p, int nbLivesRestant)
@@ -134,5 +136,23 @@ public class HudManager : MonoBehaviour
     public void Menu()
     {
         SceneManager.LoadScene("MenuScene");
+    }
+
+    public void WinPane(Player p)
+    {
+        winLoose.SetActive(true);
+        winLoose.transform.Find("Name").GetComponent<Text>().text = "Player "+p.identifiant+" win";
+    }
+
+    public void WinPane()
+    {
+        winLoose.SetActive(true);
+        winLoose.transform.Find("Name").GetComponent<Text>().text = "You win";
+    }
+
+    public void LoosePane()
+    {
+        winLoose.SetActive(true);
+        winLoose.transform.Find("Name").GetComponent<Text>().text = "You Loose";
     }
 }

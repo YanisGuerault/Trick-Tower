@@ -74,6 +74,13 @@ public class Piece : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    public void removeLastPieceGrounded()
+    {
+        GameObject piece = spawner.getLastPieceGrounded();
+        spawner.removeAPiece(piece);
+        Destroy(piece);
+    }
+
     public void rotation()
     {
         if (allowRotation)
@@ -98,6 +105,10 @@ public class Piece : MonoBehaviour
         this.spawner = spawner;
     }
 
+    public SpawnBox getSpawner()
+    {
+        return spawner;
+    }
     public void movePiece(int direction)
     {
         if(direction > 0 && (transform.position.x + .5f) < (spawner.ground.position.x +  spawner.ground.localScale.x + 2))

@@ -10,7 +10,6 @@ public class Player : MonoBehaviour
     public SpawnBox spawner;
     public bool commandsEnable = true;
     bool invicibility;
-    bool stopPiece = false;
     Bonus bonus = null;
     Malus malus = null;
     GameManager gameManager;
@@ -49,6 +48,15 @@ public class Player : MonoBehaviour
             hudManager.retireALive(this, nbLives);
         }
         checkLife();
+    }
+
+    public void addLife()
+    {
+        if (nbLives < gameManager.nbLives)
+        {
+            nbLives += 1;
+            hudManager.addALive(this, nbLives);
+        }
     }
 
     public int getLives()

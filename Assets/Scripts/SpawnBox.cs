@@ -48,6 +48,11 @@ public class SpawnBox : MonoBehaviour
         return getLastPiece().GetComponent<Piece>();
     }
 
+    public GameObject getLastPieceGrounded()
+    {
+        return pieces[pieces.Count - 2];
+    }
+
     public void removeAPiece(GameObject piece)
     {
         pieces.Remove(piece);
