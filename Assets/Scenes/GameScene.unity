@@ -820,7 +820,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4cc2f38ff55672a408a207c85bded845, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6dc7847c28126dd47ae38b1cb845cd0b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -839,8 +839,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 380802066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.35, y: 31.8, z: 56.2}
-  m_LocalScale: {x: 18.069666, y: 13.629674, z: 4}
+  m_LocalPosition: {x: -11.82, y: 61.51, z: 56.2}
+  m_LocalScale: {x: 19.943668, y: 21.62914, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -2305,6 +2305,11 @@ MonoBehaviour:
   root: {fileID: 419339420}
   nbLives: 3
   pausePanel: {fileID: 1360885618}
+  bgList:
+  - {fileID: 21300000, guid: 6dc7847c28126dd47ae38b1cb845cd0b, type: 3}
+  - {fileID: 21300000, guid: 37df289b9cc6d4349900940de341c4f9, type: 3}
+  - {fileID: 21300000, guid: 8fa49c7ae32093a42a362f3d461202e1, type: 3}
+  bg: {fileID: 380802067}
 --- !u!1 &1109851760
 GameObject:
   m_ObjectHideFlags: 0
