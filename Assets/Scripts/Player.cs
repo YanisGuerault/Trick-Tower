@@ -5,39 +5,45 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int identifiant;
+
+    #region Enum
     public enum Controls { ZQSD, Arrow };
-    public Controls controls;
+    #endregion
+
+    #region Scene object
     public SpawnBox spawner;
+    #endregion
+
+    #region Controls
+    public Controls controls;
     public bool commandsEnable = true;
+    #endregion
+
+    #region Lives
     bool invicibility;
+    [SerializeField] private int nbLives;
+    #endregion
+
+    #region Bonus/Malus
     Bonus bonus = null;
     Malus malus = null;
+    #endregion
+
+    #region Manager
     GameManager gameManager;
     HudManager hudManager;
+    #endregion
 
-
-
-    [SerializeField] private int nbLives;
-    // Start is called before the first frame update
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
         hudManager = FindObjectOfType<HudManager>();
         nbLives = gameManager.nbLives;
         invicibility = false;
-        /*bonus = new Liane();
-        malus = new Grossisement();*/
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //Debug.Log("Player "+ controls +" life :" + nbLives);
-        keyControl();
-        //spawner.changeSimulate(gameManager.getOnPause());
-        Debug.Log("Player : " + controls + " | Bonus : " + bonus + " | Malus : " + malus);
-    }
 
+    #region Lives functions
     public void removeLife()
     {
         if (!invicibility)
@@ -75,6 +81,17 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         invicibility = false;
+    }
+
+    #endregion
+
+    #region Controls functions
+    void Update()
+    {
+        //Debug.Log("Player "+ controls +" life :" + nbLives);
+        keyControl();
+        //spawner.changeSimulate(gameManager.getOnPause());
+        Debug.Log("Player : " + controls + " | Bonus : " + bonus + " | Malus : " + malus);
     }
 
     private void keyControl()
@@ -154,6 +171,10 @@ public class Player : MonoBehaviour
 
     }
 
+    #endregion
+
+    #region Bonus functions
+
     public Bonus getBonus()
     {
         return bonus;
@@ -207,5 +228,5 @@ public class Player : MonoBehaviour
             removeMalus();
         }
     }
-
+    #endregion
 }

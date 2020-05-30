@@ -6,22 +6,31 @@ using UnityEngine.UI;
 
 public class HudManager : MonoBehaviour
 {
-
-    //Dictionnaire de dictionnaire, chemin : Dictionnaire all -> Dictionnaire par player -> Tableau d'images bonus ou lives
-    // Pour all, clé = int (identifiant du player), pour player, clé = int (0 = lives et 1 = bonus)
-    //public Dictionary<int,Dictionary<int, Image[]>> all = new Dictionary<int, Dictionary<int, Image[]>>();
+    #region Parameters
     public bool pauseActive = false;
     public Sprite coeurVie;
     public Sprite coeurMort;
     public Dictionary<int, GameObject> getRootHUD = new Dictionary<int, GameObject>();
     public Canvas root;
     public int nbLives;
-    public GameObject pausePanel;
+
+    #endregion
+
+    #region Background
     public Sprite[] bgList;
     public SpriteRenderer bg;
-    public GameObject winLoose;
+    #endregion
 
+    #region Panels
+    public GameObject pausePanel;
+    public GameObject winLoose;
+    #endregion
+
+    #region Managers
     GameManager gameManager;
+    #endregion
+
+    #region Start function
 
     public void HUDStart()
     {
@@ -43,6 +52,10 @@ public class HudManager : MonoBehaviour
         bg.sprite = bgList[i];
         winLoose.SetActive(false);
     }
+
+    #endregion
+
+    #region Life functions
 
     public void retireALive(Player p, int nbLivesRestant)
     {
@@ -72,6 +85,10 @@ public class HudManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Compteur functions
+
     public void changePieceCompteur(Player p, int nbPiecesRestant)
     {
         GameObject parentRoot = null;
@@ -79,6 +96,10 @@ public class HudManager : MonoBehaviour
         Transform compteur = parentRoot.transform.Find("Compteur");
         compteur.gameObject.GetComponent<Text>().text = nbPiecesRestant.ToString(); 
     }
+
+    #endregion
+
+    #region Bonus functions
 
     public void changeBonus(Player p, Bonus b)
     {
@@ -117,11 +138,9 @@ public class HudManager : MonoBehaviour
         bonus.gameObject.GetComponent<Image>().sprite = null;
     }
 
-    public Canvas GetCanvas()
-    {
-        return root;
-    }
+    #endregion
 
+    #region OnClick Functions
     public void Pause()
     {
         pauseActive = !pauseActive;
@@ -141,7 +160,7 @@ public class HudManager : MonoBehaviour
     public void WinPane(Player p)
     {
         winLoose.SetActive(true);
-        winLoose.transform.Find("Name").GetComponent<Text>().text = "Player "+p.identifiant+" win";
+        winLoose.transform.Find("Name").GetComponent<Text>().text = "Player " + p.identifiant + " win";
     }
 
     public void WinPane()
@@ -155,4 +174,14 @@ public class HudManager : MonoBehaviour
         winLoose.SetActive(true);
         winLoose.transform.Find("Name").GetComponent<Text>().text = "You Loose";
     }
+    #endregion
+
+    #region Getter/Setter
+
+    public Canvas GetCanvas()
+    {
+        return root;
+    }
+
+    #endregion
 }

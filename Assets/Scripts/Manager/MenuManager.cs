@@ -5,12 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    #region Parameters
     public Canvas canvas;
     public GameObject CreditPanel;
     public GameObject MenuPanel;
     public GameObject SelectionPanel;
     public GameObject activePanel;
+    #endregion
 
+
+    #region Start/Update functions
     private void Start()
     {
         activePanel = MenuPanel;
@@ -24,6 +28,10 @@ public class MenuManager : MonoBehaviour
             Menu();
         }
     }
+
+    #endregion
+
+    #region onClick functions
     public void Play1J()
     {
         SceneManager.LoadScene("GameScene1J");
@@ -68,4 +76,6 @@ public class MenuManager : MonoBehaviour
             activePanel = SelectionPanel;
         }
     }
+
+    #endregion
 }

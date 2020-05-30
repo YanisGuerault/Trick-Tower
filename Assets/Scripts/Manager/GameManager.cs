@@ -5,24 +5,45 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    #region Enum
     public enum State { Play, Pause, End};
+    #endregion
+
+    #region Game State Controls
     bool onPause = false;
     bool coroutineSave = false;
-    [SerializeField] List<Player> playerList = new List<Player>();
     [SerializeField] State actualState = State.Play;
-    public int nbPlayers = 2;
-    public Bonus[] listOfBonus;
-    public Malus[] listOfMalus;
-    public float traySize = 10;
+    #endregion
+
+    #region Pieces controls
     public int nbPiecesBase = 64;
     public int[] nbPiecesAvailable;
-    public SpawnBox[] spawnBox;
+    #endregion
+
+    #region Lifes controls
     public int nbLives;
     int nbPlayersAlives;
+    #endregion
 
+    #region Bonus/Malus
+    public Bonus[] listOfBonus;
+    public Malus[] listOfMalus;
+    #endregion
+
+    #region Players controls
+    [SerializeField] List<Player> playerList = new List<Player>();
+    public int nbPlayers = 2;
+    public SpawnBox[] spawnBox;
+    #endregion
+
+    #region Managers
+    private HudManager hudManager;
+    #endregion
+
+
+    #region Start function
     public static bool isReady = false;
 
-    private HudManager hudManager;
 
     private void Start()
     {
@@ -55,7 +76,9 @@ public class GameManager : MonoBehaviour
         GameManager.isReady = true;
 
     }
+    #endregion
 
+    #region Controls functions
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
@@ -68,6 +91,9 @@ public class GameManager : MonoBehaviour
             changePauseState();
         }*/
     }
+    #endregion
+
+    #region Bonus/Malus Functions
 
     private void bonusAndMalusAttribution(Player player)
     {
@@ -89,6 +115,15 @@ public class GameManager : MonoBehaviour
         StartCoroutine(reloadBonus(player));
     }
 
+    IEnumerator reloadBonus(Player player)
+    {
+        yield return new WaitForSeconds(15f);
+        bonusAndMalusAttribution(player);
+    }
+
+    #endregion
+
+    #region Pause functions
     public bool getOnPause()
     {
         return onPause;
@@ -117,6 +152,16 @@ public class GameManager : MonoBehaviour
             StartCoroutine(waitAfterPause());
         }
     }
+
+    IEnumerator waitAfterPause()
+    {
+        yield return new WaitForSeconds(0.5f);
+        coroutineSave = false;
+    }
+
+    #endregion
+
+    #region Ending Game Functions
 
     public void endGame()
     {
@@ -174,17 +219,24 @@ public class GameManager : MonoBehaviour
         endGame();
     }
 
-    IEnumerator waitAfterPause()
+    #endregion
+
+    #region Physcis function
+    private void startStopAllPhysics(bool condition)
     {
-        yield return new WaitForSeconds(0.5f);
-        coroutineSave = false;
+        foreach (SpawnBox sb in spawnBox)
+        {
+            sb.changeSimulate(condition);
+        }
+        foreach (Player p in playerList)
+        {
+            p.commandsEnable = condition;
+        }
     }
 
-    IEnumerator reloadBonus(Player player)
-    {
-        yield return new WaitForSeconds(15f);
-        bonusAndMalusAttribution(player);
-    }
+    #endregion
+
+    #region Piece function
 
     public bool retireAPiece(Player p)
     {
@@ -199,20 +251,12 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
+    #endregion
+
+    #region Getter/Setter function
     public List<Player> getPlayerList()
     {
         return playerList;
     }
-
-    private void startStopAllPhysics(bool condition)
-    {
-        foreach (SpawnBox sb in spawnBox)
-        {
-            sb.changeSimulate(condition);
-        }
-        foreach (Player p in playerList)
-        {
-            p.commandsEnable = condition;
-        }
-    }
+    #endregion
 }

@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    Transform[] spawner;
+    #region Camera Parameters
     public float cameraSmooth = 1.0f;
     private float delta;
     private Vector3 velocity = Vector3.zero;
     private Vector3 firstPosition;
+    float fov = 0;
+    float thetax;
+    #endregion
+
+    #region Scene objects
+    Transform[] spawner;
+    #endregion
+
+    #region Manager
     GameManager gameManager;
     HudManager hudManager;
+    #endregion
 
-    // Start is called before the first frame update
+    #region Camera Functions
     void Start()
     {
         firstPosition = transform.position;
@@ -27,28 +37,26 @@ public class CameraManager : MonoBehaviour
         hudManager = FindObjectOfType<HudManager>();
     }
 
-    float zc = 0;
-    float yc = 0;
-    float fov = 0;
-    float thetax;
-    float y0 = -4;
-    float y1;
-
     private void Awake()
     {
         fov = Camera.main.orthographicSize;
         thetax = transform.eulerAngles.x;
     }
 
+    //Fonction permettant le recalibrage de la caméra pour que les pièces de chaque joueur soit toujours visible
+    // Une partie du code à été fait en relation avec le groupe Petiot/Taupin, même si il n'est pas exactement similaire
     void FixedUpdate()
     {
         if (findHighestObject("Piece") != null && findLowestObject("Piece") != null)
         {
+            float yc = 0;
+            float y0 = -4;
+            float y1;
+            float zc = 0;
+
+            //Calcul de la position yc de la caméra et de z la taille orthographique de la caméra
             y0 = findLowestObject("Piece").transform.position.y - 5;
             y1 = findHighestObject("Piece").transform.position.y + 5;
-
-
-            // Inconnus zc,yc (c = caméra) 
 
             zc = (y0 - y1) / (Mathf.Tan(Mathf.Deg2Rad * (thetax - fov / 2)) - Mathf.Tan(Mathf.Deg2Rad * (thetax + fov / 2)));
 
@@ -75,6 +83,10 @@ public class CameraManager : MonoBehaviour
 
             float z = newSize <= 18 ? 18 : Mathf.Round(newSize);
 
+            //Assignation à chaque composant, les spawners sont placés de tel sorte à être toujours au dessus de la caméra
+            // La caméra de façon à être centré, et bougeant de façon linéaire (à l'aide de la fonction SmoothDamp)
+            // Le canvas suit également le mouvement
+            // Les pièces sont également ramenés vers le bas en cas de chute de la tour la plus haute (ramenés au bord de la caméra pour toujours être visible)
 
             for (int i = 0; i < spawner.Length; i++)
             {
@@ -88,7 +100,6 @@ public class CameraManager : MonoBehaviour
             this.GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, z, Time.deltaTime * cameraSmooth);
 
 
-            // Smoothly move the camera towards that target position 
             transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, yc, transform.position.z), ref velocity, cameraSmooth);
             hudManager.GetCanvas().transform.position = Vector3.SmoothDamp(hudManager.GetCanvas().transform.position, new Vector3(hudManager.GetCanvas().transform.position.x, 10, hudManager.GetCanvas().transform.position.z),ref velocity, cameraSmooth);
             foreach (Player p in gameManager.getPlayerList())
@@ -103,6 +114,10 @@ public class CameraManager : MonoBehaviour
 
 
     }
+
+    #endregion
+
+    #region Tools Functions
 
     GameObject findHighestObject(string tag)
     {
@@ -165,4 +180,6 @@ public class CameraManager : MonoBehaviour
 
         return highestPiece;
     }
+
+    #endregion
 }

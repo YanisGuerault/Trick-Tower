@@ -9,21 +9,25 @@ Instructions du jeu :
 	
 	- Condition de défaite : Ne pas réussir à poser les 64 pièces et perdre les 3 vies
 
-	- Bonus : Récuperer une vie, 
+	- Bonus : Récuperer une vie, lier des pièces, rendre une pièce immobile 
+
+	- Malus : Donner un effet glace à l'adversaire, grossir la pièce adverse, empêcher l'adversaire de tourner sa pièce
 
 Remarques particulières : 
-	- Limitations : 
+	- Limitations : Le temps, les connaissances mathématiques pour certains bonus peut-être plus techniques (notamment pour le bonus de la bulle par exemple).
+	
 	- Bugs connus : Pièce infini lorsque un jour joue très vite avec la caméra proche du bord (Cela est dû au faite que les pièces redescende au niveau du bord de la caméra lors d'une descente de celle-ci, notamment dans le cas ou une tour tomberait)
+
 	- Voies d'amélioration : rajout de bonus/malus, rajout de mode de jeu (énigme et course), amélioration des textures, création de nouvelles pièces
 	
 Eléments techniques :
 	- Points techniques critiques du projet : 
 		- Gestion de la physique pour la descente des objets.
-		- Gestion de la caméra qui doit suivre permettre de suivre les joueurs, peu importe la différence de hauteur entre les tours
+		- Gestion de la caméra qui doit permettre de suivre les joueurs, peu importe la différence de hauteur entre les tours
 		- Gestion des bonus et des malus (utilisation de joints physiques, création d'un Physic material pour un objet de glace)
 
 	- Recherche d'outils mathématiques : 
-		- Ayant utilisé la physique de Unity, il n'y a pas eu de recherche vis-à-vis d'algorithmes de résolutions et les parties mathématiques du projet ont été résolus pour la plupart à l'aide de bon sens et de réflexion personnel.
+		- Ayant utilisé la physique de Unity, il n'y a pas eu de recherche vis-à-vis d'algorithmes de résolutions et les parties mathématiques du projet ont été résolues pour la plupart à l'aide de bon sens et de réflexion personnel.
 		  Les joints physics ayant été vus en cours il n'y a pas eu besoin de recherches complémentaires. Cependant cela a été nécessaire pour créer un objet qui reproduit une physique comme sur de la glace.
 		
 		https://answers.unity.com/questions/867610/adding-joints-through-script.html
@@ -54,12 +58,16 @@ Eléments techniques :
 
 	- Choix d'implémentation : 
 		- Tout le code aujourd'hui présent dans le jeu a été codé par nous-mêmes mis à part une fonction (Fixed Update du Caméra Manager qui viens d'une entraide avec le groupe de Benjamin Petiot et Juliette Taupin).
-   		  Le choix de tout coder de notre coté à été fait pour pouvoir avoir le controle sur le code source de notre projet et ainsi pouvoir personnaliser le fonctionnement à notre manière.
-		  Les fonctionnements sont personnalisés et adaptatifs à notre projet. Aujourd'hui mis à part quelques détails, le projet est capable d'accueillir N joueurs (si on omet la compatibilité de la HUD et des controls).
-		  Ce choix à donc permis d'avoir quelque chose de robuste par rapport à notre projet, de pouvoir faire un développement "from scratch" et sans superflu
+   		  Le choix de tous coder de notre coté à été fait pour pouvoir avoir le contrôle sur le code source de notre projet et ainsi pouvoir personnaliser le fonctionnement à notre manière.
+		  Les fonctionnements sont personnalisés et adaptatifs à notre projet. Aujourd'hui mis à part quelques détails, le projet est capable d'accueillir N joueurs (si on omet la compatibilité de la HUD et des contrôles).
+		  Ce choix a donc permis d'avoir quelque chose de robuste par rapport à notre projet, de pouvoir faire un développement "from scratch" et sans superflu.
 
 Origine des assets : 
 	- Création des modèles 3D fait main avec Blender 2.8
 
 	- Textures gratuites sur https://www.poliigon.com/
+
+	- Musique : https://www.youtube.com/watch?v=M8Frcxhc8iM&t=97s
+
+
 	
