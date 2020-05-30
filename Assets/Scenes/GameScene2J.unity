@@ -183,9 +183,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93789a50cf170e543bbc52e6c4c546fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerList: []
   actualState: 0
-  nbPlayers: 2
+  nbPiecesBase: 64
+  nbPiecesAvailable: 0000000000000000
+  nbLives: 3
   listOfBonus:
   - {fileID: 1859907481}
   - {fileID: 1109851762}
@@ -195,11 +196,9 @@ MonoBehaviour:
   - {fileID: 1054166370}
   - {fileID: 349937638}
   - {fileID: 1915432872}
-  traySize: 10
-  nbPiecesBase: 64
-  nbPiecesAvailable: 0000000000000000
+  playerList: []
+  nbPlayers: 2
   spawnBox: []
-  nbLives: 3
 --- !u!4 &90702927
 Transform:
   m_ObjectHideFlags: 0
@@ -529,8 +528,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   identifiant: 2
-  controls: 1
   spawner: {fileID: 172445775}
+  controls: 1
   commandsEnable: 1
   nbLives: 0
 --- !u!114 &172445775
@@ -1095,8 +1094,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   identifiant: 1
-  controls: 0
   spawner: {fileID: 403591539}
+  controls: 0
   commandsEnable: 1
   nbLives: 0
 --- !u!1 &419339417
@@ -1430,8 +1429,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   identifiant: 2
-  controls: 1
   spawner: {fileID: 531573419}
+  controls: 1
   commandsEnable: 1
   nbLives: 3
 --- !u!1 &593444406
@@ -2511,12 +2510,12 @@ MonoBehaviour:
   coeurMort: {fileID: 21300000, guid: 72d6fbef96849ae4ea5b271ee14218ac, type: 3}
   root: {fileID: 419339420}
   nbLives: 3
-  pausePanel: {fileID: 1360885618}
   bgList:
   - {fileID: 21300000, guid: 6dc7847c28126dd47ae38b1cb845cd0b, type: 3}
   - {fileID: 21300000, guid: 37df289b9cc6d4349900940de341c4f9, type: 3}
   - {fileID: 21300000, guid: 8fa49c7ae32093a42a362f3d461202e1, type: 3}
   bg: {fileID: 380802067}
+  pausePanel: {fileID: 1360885618}
   winLoose: {fileID: 773171263}
 --- !u!1 &1109851760
 GameObject:

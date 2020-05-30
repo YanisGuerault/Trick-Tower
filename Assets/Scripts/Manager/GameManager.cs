@@ -213,6 +213,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void endGame(Player p)
+    {
+        hudManager.WinPane(p);
+        actualState = State.End;
+        startStopAllPhysics(false);
+    }
+
     public void aPlayerDie(Player p)
     {
         nbPlayersAlives -= 1;
@@ -243,7 +250,7 @@ public class GameManager : MonoBehaviour
         int playerIdx = getPlayerList().IndexOf(p);
         if(nbPiecesAvailable[playerIdx] <= 0 )
         {
-            endGame();
+            endGame(p);
             return false;
         }
         nbPiecesAvailable[playerIdx] -= 1;
