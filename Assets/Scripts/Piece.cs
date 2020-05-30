@@ -11,7 +11,7 @@ public class Piece : MonoBehaviour
     #endregion
 
     #region Physics controls
-    float gravityScaleBase;
+    float gravityScaleBase = 1.5f;
     float lastPositionY;
     bool grounded;
     public bool allowRotation = true;
